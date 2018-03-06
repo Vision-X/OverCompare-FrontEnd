@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Header } from './Header.jsx';
 import { InputForm } from './InputForm.jsx';
@@ -16,15 +15,14 @@ class App extends Component {
       inputName: '',
       compareName: ''
     }
-
-    this.handleClick - this.handleClick.bind(this);
-    this.handleSubmit - this.handleSubmit.bind(this);
+    
   }
 
   componentDidMount() {
-  let dataGrab = (response)=> {
+  let dataGrab = (response) => {
     this.setState({dataCopy: response});
   };
+  console.log(this.state.dataCopy, "dataCopy");
   let apiURL = 'https://owapi.net/api/v3/u/Kn33s-1861/heroes';
   return fetch(apiURL)
         .then(response => response.json())

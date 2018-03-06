@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class InputForm extends Component {
-  redner() {
+  render() {
     return (
       <section className="input-form">
         <form>
