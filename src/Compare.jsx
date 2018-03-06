@@ -4,7 +4,7 @@ class Compare extends Component {
   render() {
     return (
       <section id="compare-section">
-        <h2>Hello</h2>
+        <h3>Comparisons here...</h3>
       </section>
     )
   }

@@ -9,7 +9,7 @@ class InputForm extends Component {
           <input id="input-name" type="text" />
           <label>Compare to...</label>
           <input id="compare-to" type="text" />
-          <input id="submit" type="submit" value="Submit" />
+          <input id="submit" type="submit" value="COMPARE!" />
         </form>
       </section>
     )

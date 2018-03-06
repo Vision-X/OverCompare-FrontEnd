@@ -5,7 +5,7 @@ class AddPlayer extends Component {
     return (
       <section id="add-player">
         <label>Add a player</label>
-        <input id="add-player-btn" type="submit" value="Submit"/>
+        <input id="add-player-btn" type="submit" value="Add Player"/>
       </section>
     )
   }

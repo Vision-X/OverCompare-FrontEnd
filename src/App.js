@@ -15,18 +15,18 @@ class App extends Component {
       inputName: '',
       compareName: ''
     }
-    
+
   }
 
   componentDidMount() {
-  let dataGrab = (response) => {
-    this.setState({dataCopy: response});
-  };
-  console.log(this.state.dataCopy, "dataCopy");
-  let apiURL = 'https://owapi.net/api/v3/u/Kn33s-1861/heroes';
-  return fetch(apiURL)
-        .then(response => response.json())
-        .then(dataGrab)
+    let dataGrab = (response) => {
+      this.setState({dataCopy: response});
+      console.log(this.state.dataCopy, "dataCopy");
+    };
+    let apiURL = 'https://owapi.net/api/v3/u/Kn33s-1861/heroes';
+    return fetch(apiURL)
+          .then(response => response.json())
+          .then(dataGrab)
 }
 
   render() {
@@ -39,7 +39,7 @@ class App extends Component {
         <Footer />
       </div>
     );
-  }
+  }  
 }
 
 export default App;
