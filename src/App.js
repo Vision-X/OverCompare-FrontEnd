@@ -1,18 +1,44 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Header } from './Header.jsx';
+import { InputForm } from './InputForm.jsx';
+import { AddPlayer } from './AddPlayer.jsx';
+import { Compare } from './Compare.jsx';
+import { Footer } from './Footer.jsx';
 
 class App extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      dataCopy: [],
+      inputName: '',
+      compareName: ''
+    }
+
+    this.handleClick - this.handleClick.bind(this);
+    this.handleSubmit - this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+  let dataGrab = (response)=> {
+    this.setState({dataCopy: response});
+  };
+  let apiURL = 'https://owapi.net/api/v3/u/Kn33s-1861/heroes';
+  return fetch(apiURL)
+        .then(response => response.json())
+        .then(dataGrab)
+}
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <Header />
+        <InputForm />
+        <AddPlayer />
+        <Compare />
+        <Footer />
       </div>
     );
   }
