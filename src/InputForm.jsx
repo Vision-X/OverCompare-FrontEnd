@@ -3,13 +3,13 @@ import React, { Component } from 'react';
 class InputForm extends Component {
   render() {
     return (
-      <section className="input-form">
-        <form>
+      <section onSubmit={this.props.handleSubmit} className="input-form">
+        <form onSubmit={this.props.handleSubmit}>
           <label>Enter your battletag (ex. BillyBob#1234)</label>
-          <input id="input-name" type="text" />
+          <input onChange={this.props.handleChange} id="input-name" name="player1"type="text" />
           <label>Compare to...</label>
-          <input id="compare-to" type="text" />
-          <input id="submit" type="submit" value="COMPARE!" />
+          <input onChange={this.props.handleChange} id="compare-to" name="player2" type="text" />
+          <input id="submit" type="submit" value="COMPARE" />
         </form>
       </section>
     )
