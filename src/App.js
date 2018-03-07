@@ -17,16 +17,14 @@ class App extends Component {
       player2: ''
     }
     this.handleChange = this.handleChange.bind(this);
-    // this.onSubmit = this.handleSubmit.bind(this);
   }
 
   fetchFirstPlayer() {
     let player1 = this.state.player1;
     if (player1.length > 1) {
     let apiURL1 = 'https://owapi.net/api/v3/u/' + player1 + '/heroes';
-    // let apiURL2 = 'https://owapi.net/api/v3/u/JJonak-3163/heroes';
     let dataGrab2 = (response) => {
-      this.setState({compare1: response});
+      this.setState({compare1: response.us.heroes});
       console.log(this.state.compare1, "compare1");
     };
     return fetch(apiURL1)
@@ -40,9 +38,8 @@ class App extends Component {
     let player2 = this.state.player2;
     if (player2.length > 1) {
       let apiURL2 = 'https://owapi.net/api/v3/u/' + player2 + '/heroes';
-      // let apiURL1 = 'https://owapi.net/api/v3/u/Kn33s-1861/heroes';
       let dataGrab1 = (response) => {
-        this.setState({compare2: response});
+        this.setState({compare2: response.us.heroes});
         console.log(this.state.compare2, "compare2");
       };
       return fetch(apiURL2)
