@@ -2,24 +2,55 @@
   margin: 0;
 }
 
-.App {
-  text-align: center;
+:root {
+  font-size: 1rem;
 }
 
-.App Header {
-  align-items: center;
-  background-color: #222;
-  color: white;
-  display: flex;
-  justify-content: space-around;
-  height: 6rem;
-  padding: 1.4rem;
+.orange {
+  color: #FDAF42;
+}
+
+.black {
+  color: #333333;
+}
+
+.blue-gray {
+  color: #2F3542;
+}
+
+.blue {
+  color: #25BEFC;
+}
+
+.semi-blue {
+  color: #415273;
 }
 
 .App {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  text-align: center;
+}
+
+.App Header {
+  align-items: center;
+  background-color: #333333;
+  box-shadow: 3px 3px 8px gray;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 6rem;
+  padding: 1.4rem;
+}
+
+h1 {
+  text-shadow: 3px 3px 8px gray;
+}
+
+Header span {
+  color: #FDAF42;
 }
 
 Header nav ul {
@@ -27,15 +58,28 @@ Header nav ul {
   justify-content: space-between;
   list-style: none;
   max-height: 50%;
-  outline: 1px solid gray;
-  padding: .8rem;
+  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
+  padding: .6rem;
   width: 100%;
+}
+
+Header nav ul li:hover {
+  color: #FDAF42;
+  cursor: crosshair;
 }
 
 .input-form,
 #add-player {
-  margin: 1rem 15%;
-  min-height: 30vh;
+  padding: 1rem 15%;
+}
+
+.input-form {
+  background-color: #415273;
+}
+
+#add-player {
+  border-bottom: 1px solid gray;
 }
 
 .input-form form {
@@ -46,7 +90,7 @@ Header nav ul {
 }
 
 .input-form input[type="text"] {
-  border: 1px solid orange;
+  border: 2px solid #25BEFC;
   font-size: 1rem;
   height: 1.4rem;
   margin: 1rem 0;
@@ -54,19 +98,37 @@ Header nav ul {
 }
 
 input[type="submit"] {
+  background-color: orange;
+  border: none;
+  box-shadow: 2px 2px 6px #333333;
+  height: 2.5rem;
   margin: 1rem auto;
   width: 8rem;
 }
 
+input[placeholder] {
+  color: gray;
+  font-style: italic;
+}
 
+.input-form label {
+  color: white;
+  text-shadow: 2px 2px 6px #333333;
+}
 
 #add-player {
   display: flex;
   flex-direction: column;
 }
 
+#compare-section {
+  padding: 1rem 0 0 0;
+  min-height: 50vh;
+  width: 100%;
+}
+
 Footer {
-  background-color: black;
+  background-color: #333333;
   bottom: 0;
   color: white;
   padding: 5px;
