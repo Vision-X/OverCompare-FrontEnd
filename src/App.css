@@ -33,6 +33,10 @@
   text-align: center;
 }
 
+.App section {
+  background-color: #415273;
+}
+
 .App Header {
   align-items: center;
   background-color: #333333;
@@ -57,8 +61,8 @@ Header nav ul {
   display: flex;
   justify-content: space-between;
   list-style: none;
-  max-height: 50%;
-  border-bottom: 1px solid gray;
+  /* max-height: 50%; */
+  /* border-bottom: 1px solid gray; */
   border-top: 1px solid gray;
   padding: .6rem;
   width: 100%;
@@ -75,7 +79,11 @@ Header nav ul li:hover {
 }
 
 .input-form {
-  background-color: #415273;
+  /* background-color: #415273; */
+  /* max-height: 70vh; */
+  /* height: 350px; */
+  /* THIS COULD NEED ADJUSTMENTS */
+  max-width: 100%;
 }
 
 #add-player {
@@ -86,24 +94,31 @@ Header nav ul li:hover {
   align-items: center;
   display: flex;
   flex-direction: column;
-  max-width: 100%;
+  width: 100%;
 }
 
 .input-form input[type="text"] {
   /* border: 2px solid #25BEFC; */
-  font-size: 1rem;
-  height: 1.4rem;
+  color: black;
+  font-size: 1.4rem;
+  height: 1.6rem;
   margin: 1rem 0;
-  width: 14rem;
+  min-width: 80%;
 }
 
 input[type="submit"] {
   background-color: orange;
   border: none;
-  box-shadow: 2px 2px 6px #333333;
+  box-shadow: 3px 3px 8px #333333;
+  color: white;
+  font-size: 1.3rem;
   height: 2.5rem;
   margin: 1rem auto;
   width: 8rem;
+}
+
+input[type="submit"]:disabled {
+  background-color: gray;
 }
 
 input[placeholder] {
@@ -112,8 +127,11 @@ input[placeholder] {
 }
 
 .input-form label {
+  /* border-top: 1px solid gray; */
+  border-bottom: 1px solid gray;
   color: white;
-  text-shadow: 2px 2px 6px #333333;
+  padding: 0.6rem 1.2rem;
+  /* text-shadow: 2px 2px 6px #333333; */
 }
 
 #add-player {
