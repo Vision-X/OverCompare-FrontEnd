@@ -24,6 +24,10 @@ class App extends Component {
     return (this.state.player1.length >= 5 && this.state.player2.length >= 5)
   }
 
+  get buttonDisabled() {
+    return ("false")
+  }
+
   get dataIsThere() {
     if (this.state.player1.length > 0 && this.state.player2.length > 0) {
       return true
@@ -80,13 +84,13 @@ class App extends Component {
       if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
         this.setState({player1: event.target.value})
       } else {
-        alert('INVALID FORMAT: Only use letters, separated by -, followed by numbers')
+        console.log('INVALID FORMAT: Only use letters, separated by -, followed by numbers')
       }
     } else if (targetField === 'player2') {
       if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
         this.setState({player2: event.target.value})
       } else {
-        alert('INVALID FORMAT: Only use letters, separated by -, followed by numbers')
+        console.log('INVALID FORMAT: Only use letters, separated by -, followed by numbers')
       }
     }
   }
