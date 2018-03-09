@@ -80,7 +80,7 @@ Header nav ul li:hover {
 .input-form {
   /* background-color: #415273; */
   /* max-height: 70vh; */
-  height: fill;
+  height: stretch;
   max-height: 70vh;
   /* THIS COULD NEED ADJUSTMENTS */
   max-width: 100%;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import Anime from 'react-anime';
 import './App.css';
 import { Header } from './Header.jsx';
 import { InputForm } from './InputForm.jsx';
@@ -14,7 +15,8 @@ class App extends Component {
       compare1: [],
       compare2: [],
       player1: '',
-      player2: ''
+      player2: '',
+      matchedData: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,13 +41,19 @@ class App extends Component {
   findMatches = () => {
       let comp1 = this.state.compare1[0].stats.competitive;
       let comp2 = this.state.compare2[0].stats.competitive;
+      let charArray = [];
       for (let character in comp1) {
         if (comp2.hasOwnProperty(character)) {
-          console.log(character, comp1[character], "comp1");
-          console.log(character, comp2[character], "comp2");
-        }
+          console.log(character);
+          // console.log(character, comp1[character], "comp1");
+          // console.log(character, comp2[character], "comp2");
+          charArray.push(character)
+          // console.log(Object.keys(character));
+          console.log(charArray);
+          this.setState({matchedData: charArray})
       }
     }
+  }
 
   fetchFirstPlayer() {
     let player1 = this.state.player1;
@@ -104,6 +112,8 @@ class App extends Component {
         setTimeout(() => {
           this.fetchSecondPlayer().then(this.findMatches)
         }, 1100)
+      }).then(function() {
+        document.getElementById('compare-section').classList.remove('hidden');
       })
     }
   }
@@ -118,13 +128,15 @@ class App extends Component {
 
   render() {
     return (
+    // <Anime opacity={[0, 1]} translateY="2rem" delay={(e, i) => i * 10000}>
       <div className="App">
         <Header />
         <InputForm data1={this.findMatches} data2={this.state.compare2} disabled={!this.buttonEnabled} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
         <AddPlayer />
-        <Compare />
+        <Compare data={this.state.matchedData} />
         <Footer />
       </div>
+    // </Anime>
     );
   }
 }
