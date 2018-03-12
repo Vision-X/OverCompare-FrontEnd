@@ -80,7 +80,7 @@ Header nav ul li:hover {
 .input-form {
   /* background-color: #415273; */
   /* max-height: 70vh; */
-  height: stretch;
+  /* height: stretch; */
   max-height: 70vh;
   /* THIS COULD NEED ADJUSTMENTS */
   max-width: 100%;
@@ -150,6 +150,26 @@ input[placeholder] {
   padding: 1rem 0 0 0;
   min-height: 50vh;
   width: 100%;
+}
+
+#compare-section h3 {
+  background-color: #2F3542;
+  border: 1px solid gray;
+  color: white;
+  font-size: 1.2rem;
+  margin: auto;
+  margin-top: .5rem;
+  padding: 0.8rem 1.2rem;
+  width: 14rem;
+}
+
+.react-tabs__tab-list {
+  border-bottom: 1px solid #FDAF42 !important;
+}
+
+.react-tabs__tab--selected {
+  background: #FDAF42 !important;
+  border-radius: 0 !important;
 }
 
 Footer {

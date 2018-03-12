@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import Anime from 'react-anime';
 import './App.css';
+import 'react-tabs/style/react-tabs.css';
+// import createPlotlyComponent from 'react-plotly.js/factory'
+
 import { Header } from './Header.jsx';
 import { InputForm } from './InputForm.jsx';
 import { AddPlayer } from './AddPlayer.jsx';
@@ -44,7 +48,7 @@ class App extends Component {
       let charArray = [];
       for (let character in comp1) {
         if (comp2.hasOwnProperty(character)) {
-          console.log(character);
+          console.log(comp1[character].general_stats);
           // console.log(character, comp1[character], "comp1");
           // console.log(character, comp2[character], "comp2");
           charArray.push(character)
