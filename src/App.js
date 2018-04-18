@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import Anime from 'react-anime';
 import './App.css';
 import 'react-tabs/style/react-tabs.css';
-// import createPlotlyComponent from 'react-plotly.js/factory'
-
 import { Header } from './Header.jsx';
 import { InputForm } from './InputForm.jsx';
 import { AddPlayer } from './AddPlayer.jsx';
@@ -20,7 +17,8 @@ class App extends Component {
       compare2: [],
       player1: '',
       player2: '',
-      matchedData: []
+      matchedData: [],
+      competitiveStats: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,34 +41,81 @@ class App extends Component {
   }
 
   findMatches = () => {
+      let stuff = [{x: 2, y: 0}, {x: 2, y: 0}];
       let comp1 = this.state.compare1[0].stats.competitive;
       let comp2 = this.state.compare2[0].stats.competitive;
       let charArray = [];
+      let stats = [];
+      let stats2 = [];
       for (let character in comp1) {
         if (comp2.hasOwnProperty(character)) {
-          console.log(comp1[character].general_stats);
-          // console.log(character, comp1[character], "comp1");
-          // console.log(character, comp2[character], "comp2");
+          // console.log(comp1[character].general_stats);
+          stats[character] = comp1[character].general_stats;
+          stats2[character] = comp2[character].general_stats;
+          this.setState({competitiveStats: stats})
+          this.setState({})
+          console.log("stats...", stats);
+
           charArray.push(character)
-          // console.log(Object.keys(character));
-          console.log(charArray);
           this.setState({matchedData: charArray})
+          console.log(charArray);
       }
     }
+    for (let i = 0; i < Object.entries(stats).length; i++) {
+      let name = Object.entries(stats)[i][0];
+      let data = Object.entries(Object.entries(stats)[i][1]).sort();
+      let data2 = Object.entries(Object.entries(stats2)[i][1]).sort();
+      console.log("data2............", data2);
+      console.log("character: ", name);
+      for (let j=0; j < data.length && j < data2.length; j++) {
+        // console.log("stat name: ", data[j][0]);
+        // console.log("stat value: ", data[j][1]);
+        // console.log("stat name2: ", data2[j][0]);
+        if (data[j][0] === data2[j][0]) {
+          // console.log("statName: " + data[j][0]);
+          // console.log("statValues: ", "p1 :" + data[j][1], "p2: " + data2[j][1]);
+          let statValue = data[j][1];
+          let statValue2 = data2[j][1]
+          stuff[0].y = statValue;
+          stuff[1].y = statValue2;
+          console.log("statName: " + data[j][0]);
+          console.log("stuff...", stuff);
+        }
+        // let statValue = data[j][1];
+        // let statValue2 = data2[j][1]
+        // stuff[0].y = statValue;
+        // stuff[1].y = statValue2;
+        // console.log("STUFF", "for char: " + name, ", stat name: " + data[j][0] , stuff);
+      }
+    }
+    // console.log("STUFF!", stuff);
   }
+
+  // breakItDown = (stats) => {
+  // // console.log(Object.entries(stats)[0][0])
+  //     for (let i = 0; i < Object.entries(stats).length; i++) {
+  //       let name = Object.entries(stats)[i][0];
+  //       let data = Object.entries(Object.entries(stats)[i][1]).sort();
+  //       console.log("character: ", name);
+  //       for (let j=0; j < data.length; j++) {
+  //         console.log("stat name: ", data[j][0]);
+  //         console.log("stat value: ", data[j][1]);
+  //       }
+  //     }
+  // }
 
   fetchFirstPlayer() {
     let player1 = this.state.player1;
     if (player1.length > 1) {
-    let apiURL1 = 'https://owapi.net/api/v3/u/' + player1 + '/heroes';
-    let dataGrab1 = (response) => {
-      this.setState({compare1: [response.us.heroes]});
-      console.log(this.state.compare1, "compare1");
-    };
-    return fetch(apiURL1)
-    .then(response => response.json())
-    .then(dataGrab1)
-    .catch()
+      let apiURL1 = 'https://owapi.net/api/v3/u/' + player1 + '/heroes';
+      let dataGrab1 = (response) => {
+        this.setState({compare1: [response.us.heroes]});
+        console.log(this.state.compare1, "compare1");
+      };
+      return fetch(apiURL1)
+        .then(response => response.json())
+        .then(dataGrab1)
+        .catch()
     }
   }
 
@@ -84,9 +129,9 @@ class App extends Component {
         console.log(this.state.compare2, "compare2");
       };
       return fetch(apiURL2)
-      .then(response => response.json())
-      .then(dataGrab2)
-      .catch()
+            .then(response => response.json())
+            .then(dataGrab2)
+            .catch()
     }
   }
 
@@ -116,7 +161,7 @@ class App extends Component {
         setTimeout(() => {
           this.fetchSecondPlayer().then(this.findMatches)
         }, 1100)
-      }).then(function() {
+      }).then(() => {
         document.getElementById('compare-section').classList.remove('hidden');
       })
     }
