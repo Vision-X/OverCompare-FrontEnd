@@ -26,7 +26,7 @@ class Compare extends Component {
             }).map(name => {
                 return (<Tab>
                           <img className="character-image" src="https://d1u1mce87gyfbn.cloudfront.net/game/heroes/small/0x02E000000000006E.png" />
-                        {name}
+                        {name.toUpperCase()}
                         </Tab> )
               })
             }
