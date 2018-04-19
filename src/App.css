@@ -8,7 +8,7 @@
 
 body {
   background-color: #415273;
-  font-family: sans-serif;
+  font-family: impact;
 }
 
 /* :root {
@@ -79,6 +79,7 @@ Header span {
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
+  width: 110%;
 }
 
 Header nav ul {
@@ -170,6 +171,7 @@ input[placeholder] {
   border-radius: 4px;
   color: white;
   font-size: 1.2rem;
+  font-style: italic;
   margin-top: .5rem;
   padding: 0.8rem 1.2rem;
   width: 12rem;
@@ -191,10 +193,10 @@ svg {
 }
 
 #compare-section {
-  margin: 1rem;
+  /* margin: 1rem; */
   min-height: 80vh;
   padding: 1rem 0 0 0;
-  /* width: 100%; */
+  width: 100%;
 }
 
 #compare-section h3 {
@@ -249,6 +251,7 @@ div.react-tabs ul {
   flex-flow: row wrap !important;
   flex-grow: 1;
   font-size: 1.2rem !important;
+  font-style: italic;
   /* justify-content: auto !important; */
   /* outline: 1px solid gray !important; */
   padding: 0.6rem !important;
@@ -283,7 +286,7 @@ div.react-tabs ul {
   /* border-radius: 2rem; */
   height: 56px;
   width: 56px;
-  margin: 0 12% 0 6%;
+  margin: 0 1.4rem 0 1rem;
 }
 
 .react-tabs_tab-panel {
@@ -310,8 +313,13 @@ Footer {
     font-size: 0.8rem;
   }
 
+  div.react-tabs ul {
+    margin: 0 5vw;
+    width: 90vw;
+  }
+
   .react-tabs__tab {
-    font-size: 1.2rem !important;
+    font-size: 1rem !important;
   }
 
   .input-form {
@@ -325,5 +333,11 @@ Footer {
   .input-form input[type="text"] {
     /* width: 60vw !important; */
     /* font-size: 1.rem; */
+  }
+
+  .character-image {
+    height: 36px;
+    width: 36px;
+    margin: 0 .4rem 0 0%;
   }
 }
