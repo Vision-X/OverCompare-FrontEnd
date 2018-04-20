@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import BarChart from "react-svg-bar-chart";
 
-const barData = [{ x: 2, y: 3 }, { x: 6, y: 4 }];
+// const barData = [{ x: 2, y: 3 }, { x: 6, y: 4 }];
 const charImages = [{ana: "https://d1u1mce87gyfbn.cloudfront.net/game/heroes/small/0x02E000000000013B.png"},
                     {bastion: "https://d1u1mce87gyfbn.cloudfront.net/game/heroes/small/0x02E0000000000015.png"},
                     {brigitte: "https://d1u1mce87gyfbn.cloudfront.net/game/heroes/small/0x02E0000000000195.png"},
@@ -35,6 +35,37 @@ const charImages = [{ana: "https://d1u1mce87gyfbn.cloudfront.net/game/heroes/sma
 class Compare extends Component {
   componentDidMount() {}
 
+  setData() {
+    let compStats1 = this.state.competitiveStats1;
+    let compStats2 = this.state.competitveStats2;
+    console.log(compStats1, compStats2);
+
+    for (let i = 0; i < Object.entries(compStats1).length; i++) {
+      let name = Object.entries(compStats1)[i][0];
+      let data = Object.entries(Object.entries(compStats1)[i][1]).sort();
+      let data2 = Object.entries(Object.entries(compStats2)[i][1]).sort();
+      // console.log("data2............", data2);
+      console.log("character: ", name);
+      for (let j = 0; j < data.length && j < data2.length; j++) {
+        // console.log("stat name: ", data[j][0]);
+        // console.log("stat value: ", data[j][1]);
+        // console.log("stat name2: ", data2[j][0]);
+        if (data[j][0] === data2[j][0]) {
+          // console.log("statName: " + data[j][0]);
+          // console.log("statValues: ", "p1 :" + data[j][1], "p2: " + data2[j][1]);
+          let statValue = data[j][1];
+          let statValue2 = data2[j][1];
+          // this.setState({chartData[0].y = statValue});
+          // chartData[1].y = statValue2;
+          console.log("statName: " + data[j][0]);
+          // console.log("chartData...", chartData);
+
+          // return stuff;
+        }
+      }
+    }
+  }
+
   render() {
     return (
       <section className="hidden" id="compare-section">
@@ -53,13 +84,9 @@ class Compare extends Component {
                     <img
                       className="character-image"
                       src={charImages.reduce(function(acc, currVal, index) {
-                        console.log(name), "name!!!!";
-                        console.log(currVal, "currVal");
                         if (Object.keys(currVal)[0] === name) {
-                          console.log(Object.values(currVal), "YOLO BOIIII");
                           acc = Object.values(currVal)[0];
                         }
-                        console.log(acc, "acc");
                         return acc;
                       }, "")
                     }
@@ -70,10 +97,11 @@ class Compare extends Component {
               })}
           </TabList>
           {this.props.data.map(character => {
+            let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
             return (
               <TabPanel>
                 <h4>{character}</h4>
-                <BarChart data={barData} />
+                <BarChart data={this.props.data1} data1={this.props.data2}/>
               </TabPanel>
             );
           })}

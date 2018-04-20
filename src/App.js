@@ -4,9 +4,12 @@ import "./App.css";
 import "react-tabs/style/react-tabs.css";
 import { Header } from "./Header.jsx";
 import { InputForm } from "./InputForm.jsx";
+import { Players } from "./Players.jsx";
 import { AddPlayer } from "./AddPlayer.jsx";
 import { Compare } from "./Compare.jsx";
 import { Footer } from "./Footer.jsx";
+
+var clickCount = 0;
 
 class App extends Component {
   constructor() {
@@ -17,10 +20,13 @@ class App extends Component {
       player1: "",
       player2: "",
       matchedData: [],
-      competitiveStats: []
+      competitiveStats1: [],
+      competitiveStats2: [],
+      chartData: [{x: 2, y: 0}, {x: 2, y: 0}]
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   get buttonEnabled() {
@@ -51,8 +57,8 @@ class App extends Component {
         // console.log(comp1[character].general_stats);
         stats[character] = comp1[character].general_stats;
         stats2[character] = comp2[character].general_stats;
-        this.setState({ competitiveStats: stats });
-        this.setState({});
+        this.setState({ competitiveStats1: stats });
+        this.setState({ competitiveStats2: stats2 });
         console.log("stats...", stats);
 
         charArray.push(character);
@@ -60,33 +66,35 @@ class App extends Component {
         console.log(charArray);
       }
     }
-    for (let i = 0; i < Object.entries(stats).length; i++) {
-      let name = Object.entries(stats)[i][0];
-      let data = Object.entries(Object.entries(stats)[i][1]).sort();
-      let data2 = Object.entries(Object.entries(stats2)[i][1]).sort();
-      console.log("data2............", data2);
-      console.log("character: ", name);
-      for (let j = 0; j < data.length && j < data2.length; j++) {
-        // console.log("stat name: ", data[j][0]);
-        // console.log("stat value: ", data[j][1]);
-        // console.log("stat name2: ", data2[j][0]);
-        if (data[j][0] === data2[j][0]) {
-          // console.log("statName: " + data[j][0]);
-          // console.log("statValues: ", "p1 :" + data[j][1], "p2: " + data2[j][1]);
-          let statValue = data[j][1];
-          let statValue2 = data2[j][1];
-          stuff[0].y = statValue;
-          stuff[1].y = statValue2;
-          console.log("statName: " + data[j][0]);
-          console.log("stuff...", stuff);
-        }
+    // for (let i = 0; i < Object.entries(stats).length; i++) {
+    //   let name = Object.entries(stats)[i][0];
+    //   let data = Object.entries(Object.entries(stats)[i][1]).sort();
+    //   let data2 = Object.entries(Object.entries(stats2)[i][1]).sort();
+    //   console.log("data2............", data2);
+    //   console.log("character: ", name);
+    //   for (let j = 0; j < data.length && j < data2.length; j++) {
+    //     // console.log("stat name: ", data[j][0]);
+    //     // console.log("stat value: ", data[j][1]);
+    //     // console.log("stat name2: ", data2[j][0]);
+    //     if (data[j][0] === data2[j][0]) {
+    //       // console.log("statName: " + data[j][0]);
+    //       // console.log("statValues: ", "p1 :" + data[j][1], "p2: " + data2[j][1]);
+    //       let statValue = data[j][1];
+    //       let statValue2 = data2[j][1];
+    //       // this.setState({chartData[0].y = statValue});
+    //       // chartData[1].y = statValue2;
+    //       console.log("statName: " + data[j][0]);
+    //       // console.log("chartData...", chartData);
+    //
+    //       // return stuff;
+    //     }
         // let statValue = data[j][1];
         // let statValue2 = data2[j][1]
         // stuff[0].y = statValue;
         // stuff[1].y = statValue2;
         // console.log("STUFF", "for char: " + name, ", stat name: " + data[j][0] , stuff);
-      }
-    }
+      // }
+    // }
     // console.log("STUFF!", stuff);
   };
 
@@ -109,7 +117,7 @@ class App extends Component {
       let apiURL1 = "https://owapi.net/api/v3/u/" + player1 + "/heroes";
       let dataGrab1 = response => {
         this.setState({ compare1: [response.us.heroes] });
-        console.log(this.state.compare1, "compare1");
+        // console.log(this.state.compare1, "compare1");
       };
       return fetch(apiURL1)
         .then(response => response.json())
@@ -124,7 +132,7 @@ class App extends Component {
       let apiURL2 = "https://owapi.net/api/v3/u/" + player2 + "/heroes";
       let dataGrab2 = response => {
         this.setState({ compare2: [response.us.heroes] });
-        console.log(this.state.compare2, "compare2");
+        // console.log(this.state.compare2, "compare2");
       };
       return fetch(apiURL2)
         .then(response => response.json())
@@ -159,13 +167,15 @@ class App extends Component {
     if (this.state.player1.length > 5 && this.state.player2.length > 5) {
       console.log("submit occured");
       document.getElementById("submit").setAttribute("disabled", "true");
+      // document.querySelector(".input-section").classList.add("compare-shrink");
       document.querySelector(".input-form").classList.add("hidden");
+      document.querySelector("#compare-btn").value = "SHOW";
       event.target.reset();
       this.fetchFirstPlayer()
         .then(() => {
           setTimeout(() => {
             this.fetchSecondPlayer().then(this.findMatches);
-          }, 1100);
+          }, 1001);
         })
         .then(() => {
           document.getElementById("compare-section").classList.remove("hidden");
@@ -173,9 +183,24 @@ class App extends Component {
     }
   };
 
-  componentWillMount() {}
+  handleClick(event) {
+    console.log(event.target, "targetttt");
+      if (event.target.value === "HIDE") {
+        event.target.value = (clickCount % 2 === 0) ? "SHOW" : "HIDE";
+        clickCount++;
+        // document.querySelector(".input-section").classList.add("compare-shrink");
+        document.querySelector(".input-form").classList.add("hidden");
+      } else {
+        // document.querySelector(".input-section").classList.remove("compare-shrink");
+        event.target.value = (clickCount % 2 === 0) ? "SHOW" : "HIDE";
+        clickCount++;
+        document.querySelector(".input-form").classList.remove("hidden");
+      }
+  }
 
-  componentDidMount() {}
+  componentWillMount() {};
+
+  componentDidMount() {};
 
   render() {
     return (
@@ -188,9 +213,10 @@ class App extends Component {
           disabled={!this.buttonEnabled}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          onClick={this.handleClick}
         />
         <AddPlayer />
-        <Compare data={this.state.matchedData} />
+        <Compare data={this.state.matchedData} data2={this.state.competitveStats1} data3={this.state.competitveStats2}/>
         <Footer />
       </div>
       // </Anime>

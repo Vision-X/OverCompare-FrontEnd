@@ -66,11 +66,6 @@ h1 {
   flex-direction: column;
   font-size: 3rem;
   line-height: 2.5rem;
-  /* text-align: left; */
-  /* background-image: linear-gradient(to right, white, orange 30%, red);
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text; */
 }
 
 Header span {
@@ -87,8 +82,9 @@ Header nav ul {
   display: flex;
   justify-content: space-between;
   list-style: none;
+  margin-top: 1rem;
   padding: .6rem;
-  width: 12rem;
+  width: 16rem;
 }
 
 Header nav ul li:hover {
@@ -96,30 +92,41 @@ Header nav ul li:hover {
   cursor: crosshair;
 }
 
-.input-form,
+.input-section,
 #add-player {
   padding: 2.4rem 20%;
 }
 
-.input-form {
-  /* background-color: green !important; */
+.input-section {
   background-image: url("/imageedit_2_7841000381.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: .2rem;
   box-shadow: 3px 3px 8px black;
-  height: 53vh;
-  /* THIS COULD NEED ADJUSTMENTS */
+  min-height: 6vh;
   margin: 1rem;
   max-width: 100%;
+}
+
+.input-section.compare-shrink {
+  top: 0;
+  position: relative;
+  transition: all .8s ease-out;
+}
+
+
+.input-section.ease-in {
+  top: 0;
+  position: relative;
+  transition: all .3s ease-in;
 }
 
 #add-player {
   border-bottom: 1px solid gray;
 }
 
-.input-form form {
+.input-section form {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -134,17 +141,25 @@ input:focus {
   outline: 4px solid orange !important;
 }
 
-.input-form input[type="text"] {
-  /* border: 2px solid #25BEFC; */
+.input-section input[type="text"] {
   border-radius: 4px;
   color: black;
   font-size: 1.6rem;
   height: 3rem;
   margin: 1rem 0;
-  /* max-width: 60%; */
 }
 
 input[type="submit"] {
+  margin-bottom: 1rem;
+  width: 12rem;
+}
+
+input[type="button"] {
+  width: 6rem;
+}
+
+input[type="submit"],
+input[type="button"] {
   background-color: orange;
   border: none;
   border-radius: 4px;
@@ -153,7 +168,11 @@ input[type="submit"] {
   font-family: impact;
   font-size: 1.3rem;
   height: 3rem;
-  width: 12rem;
+}
+
+input[type="button"]:focus {
+  outline: none !important;
+  -webkit-appearance: none;
 }
 
 input[type="submit"]:disabled {
@@ -165,8 +184,7 @@ input[placeholder] {
   color: gray;
 }
 
-.input-form label {
-  /* border-top: 1px solid gray; */
+.input-section label {
   background-color: #2F3542;
   border: 1px solid gray;
   border-radius: 4px;
@@ -176,7 +194,6 @@ input[placeholder] {
   margin-top: .5rem;
   padding: 0.8rem 1.2rem;
   width: 12rem;
-  /* text-shadow: 2px 2px 6px #333333; */
 }
 
 #add-player {
@@ -211,55 +228,35 @@ svg {
   width: 14rem;
 }
 
-/* div ul.react-tabs {
-  border: none !important;
-  margin: 0 auto;
-  text-align: center;
-  margin: 2rem 20% !important;
-  width: 80% !important;
-} */
-
 ul.react-tabs__tab-list {
   border-bottom: none !important;
   display: flex !important;
-  /* flex-direction: column !important; */
   flex-flow: row wrap !important;
   margin-top: 2rem !important;
-  /* padding-left: 10%; */
-  /* width: 100% !important; */
 }
 
 div.react-tabs ul {
-  /* display: flex;
-  flex-direction: row; */
-  /* margin: 0 auto; */
   margin: 0 20vw;
   width: 60vw;
-  /* border: 4px solid white; */
-
 }
 
 .react-tabs__tab {
   align-items: center;
   background: #FDAF42 !important;
-  /* border: 1px solid white !important; */
   box-shadow: 1px 1px 8px black;
   border-radius: 4px;
   color: white;
   display: flex !important;
   -webkit-flex-direction: row !important;
   -ms-flex-direction: row !important;
-  flex-flow: row wrap !important;
   flex-grow: 1;
   font-size: 1.2rem !important;
   font-style: italic;
-  /* justify-content: auto !important; */
-  /* outline: 1px solid gray !important; */
+  justify-content: left;
   padding: 0.6rem !important;
-  text-align: center;
   text-shadow: 2px 2px 6px #333333;
-  height: 4rem;
-  width: 27vw;
+  height: 3rem;
+  width: 42%;
 }
 
 .react-tabs__tab:hover {
@@ -277,14 +274,12 @@ div.react-tabs ul {
   border-radius: 4px !important;
   color: #000000 !important;
   text-shadow: 2px 2px 6px gray;
-  /* text-outline: 1px black; */
-  /* text-shadow: 2px 2px 6px #FDAF42; */
 }
 
 .character-image {
+  background-color: #2F3542;
   border: 1px solid #2F3542;
   box-shadow: 1px 1px 24px #2F3542;
-  /* border-radius: 2rem; */
   height: 56px;
   width: 56px;
   margin: 0 1.4rem 0 1rem;
@@ -311,7 +306,7 @@ Footer {
 
 @media screen and (max-width: 675px) {
   :root {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
 
   div.react-tabs ul {
@@ -320,25 +315,24 @@ Footer {
   }
 
   .react-tabs__tab {
-    font-size: 1rem !important;
+    font-size: 1.6rem !important;
+    height: 4rem !important;
+    width: 100% !important;
   }
 
-  .input-form {
+  .react-tabs__tab-list {
+    margin-bottom: 4rem !important;
+  }
+
+  .input-section {
     background-position: left;
     background-position-y: 0vh;
-    /* THIS COULD NEED ADJUSTMENTS */
     max-width: 100vw;
-    height: 40vh;
-  }
-
-  .input-form input[type="text"] {
-    /* width: 60vw !important; */
-    /* font-size: 1.rem; */
   }
 
   .character-image {
-    height: 36px;
-    width: 36px;
-    margin: 0 .4rem 0 0%;
+    height: 46px;
+    margin: 0 2rem 0 1rem !important;
+    width: 46px;
   }
 }
