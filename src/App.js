@@ -50,27 +50,29 @@ class App extends Component {
     let comp1 = this.state.compare1[0].stats.competitive;
     let comp2 = this.state.compare2[0].stats.competitive;
     let charArray = [];
-    let stats = [];
-    let stats2 = [];
+    let stats = {};
+    let stats2 = {};
     for (let character in comp1) {
       if (comp2.hasOwnProperty(character)) {
         // console.log(comp1[character].general_stats);
         stats[character] = comp1[character].general_stats;
         stats2[character] = comp2[character].general_stats;
+        // console.log(character, ".....", stats[character], "stats[character] line60");
         this.setState({ competitiveStats1: stats });
         this.setState({ competitiveStats2: stats2 });
-        console.log("stats...", stats);
+        console.log("competitiveStats1...", this.state.competitiveStats1);
+        console.log("competitiveStats2...", this.state.competitiveStats2);
 
         charArray.push(character);
         this.setState({ matchedData: charArray });
-        console.log(charArray);
+        // console.log(charArray);
       }
     }
     // for (let i = 0; i < Object.entries(stats).length; i++) {
     //   let name = Object.entries(stats)[i][0];
     //   let data = Object.entries(Object.entries(stats)[i][1]).sort();
     //   let data2 = Object.entries(Object.entries(stats2)[i][1]).sort();
-    //   console.log("data2............", data2);
+    //   // console.log("data2............", data2);
     //   console.log("character: ", name);
     //   for (let j = 0; j < data.length && j < data2.length; j++) {
     //     // console.log("stat name: ", data[j][0]);
@@ -88,12 +90,12 @@ class App extends Component {
     //
     //       // return stuff;
     //     }
-        // let statValue = data[j][1];
-        // let statValue2 = data2[j][1]
-        // stuff[0].y = statValue;
-        // stuff[1].y = statValue2;
-        // console.log("STUFF", "for char: " + name, ", stat name: " + data[j][0] , stuff);
-      // }
+    //     let statValue = data[j][1];
+    //     let statValue2 = data2[j][1]
+    //     stuff[0].y = statValue;
+    //     stuff[1].y = statValue2;
+    //     console.log("STUFF", "for char: " + name, ", stat name: " + data[j][0] , stuff);
+    //   }
     // }
     // console.log("STUFF!", stuff);
   };
@@ -117,7 +119,6 @@ class App extends Component {
       let apiURL1 = "https://owapi.net/api/v3/u/" + player1 + "/heroes";
       let dataGrab1 = response => {
         this.setState({ compare1: [response.us.heroes] });
-        // console.log(this.state.compare1, "compare1");
       };
       return fetch(apiURL1)
         .then(response => response.json())
@@ -132,7 +133,6 @@ class App extends Component {
       let apiURL2 = "https://owapi.net/api/v3/u/" + player2 + "/heroes";
       let dataGrab2 = response => {
         this.setState({ compare2: [response.us.heroes] });
-        // console.log(this.state.compare2, "compare2");
       };
       return fetch(apiURL2)
         .then(response => response.json())
@@ -166,10 +166,11 @@ class App extends Component {
     event.preventDefault();
     if (this.state.player1.length > 5 && this.state.player2.length > 5) {
       console.log("submit occured");
-      document.getElementById("submit").setAttribute("disabled", "true");
+      // document.getElementById("submit").setAttribute("disabled", "true");
       // document.querySelector(".input-section").classList.add("compare-shrink");
       document.querySelector(".input-form").classList.add("hidden");
       document.querySelector("#compare-btn").value = "SHOW";
+      clickCount++;
       event.target.reset();
       this.fetchFirstPlayer()
         .then(() => {

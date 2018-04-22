@@ -6,7 +6,7 @@ class InputForm extends Component {
     return (
         <section className="input-section">
           <form className="input-form" onSubmit={this.props.handleSubmit}>
-            // {this.findMatches}
+            {this.findMatches}
             <label>ENTER BATTLETAG</label>
             <input onChange={this.props.handleChange} id="input-name" name="player1" ref="player1 "type="text" placeholder="ex. KobraKai-1456"/>
             <label>COMPARE TO</label>
