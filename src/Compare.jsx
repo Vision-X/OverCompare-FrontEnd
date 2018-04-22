@@ -115,7 +115,10 @@ const charImages = [
 ];
 
 class Compare extends Component {
-  componentDidMount() {}
+  constructor() {
+    super();
+
+  }
 
   setData() {
     let compStats1 = this.props.competitiveStats1;
@@ -148,9 +151,11 @@ class Compare extends Component {
     }
   }
 
+  componentWillMount() {
+  }
+
   componentDidMount() {
     // console.log(this.setData(), "setData function call")
-
   }
 
   render() {

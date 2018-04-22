@@ -8,6 +8,7 @@ import { Players } from "./Players.jsx";
 import { AddPlayer } from "./AddPlayer.jsx";
 import { Compare } from "./Compare.jsx";
 import { Footer } from "./Footer.jsx";
+import MDSpinner from 'react-md-spinner';
 
 var clickCount = 0;
 
@@ -22,7 +23,8 @@ class App extends Component {
       matchedData: [],
       competitiveStats1: [],
       competitiveStats2: [],
-      chartData: [{x: 2, y: 0}, {x: 2, y: 0}]
+      chartData: [{x: 2, y: 0}, {x: 2, y: 0}],
+      isMounted: "none"
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -65,6 +67,7 @@ class App extends Component {
 
         charArray.push(character);
         this.setState({ matchedData: charArray });
+        this.setState({ isMounted: "none"})
         // console.log(charArray);
       }
     }
@@ -172,6 +175,7 @@ class App extends Component {
       document.querySelector("#compare-btn").value = "SHOW";
       clickCount++;
       event.target.reset();
+      this.setState({ isMounted: "inline-block"});
       this.fetchFirstPlayer()
         .then(() => {
           setTimeout(() => {
@@ -199,9 +203,13 @@ class App extends Component {
       }
   }
 
-  componentWillMount() {};
+  componentWillMount() {
+    this.setState({ isMounted: "inline-block"})
+  };
 
-  componentDidMount() {};
+  componentDidMount() {
+    this.setState({ isMounted: "none"})
+  };
 
   render() {
     return (
@@ -217,7 +225,8 @@ class App extends Component {
           onClick={this.handleClick}
         />
         <AddPlayer />
-        <Compare data={this.state.matchedData} data2={this.state.competitveStats1} data3={this.state.competitveStats2}/>
+        <MDSpinner style={{display: this.state.isMounted}} />
+        <Compare userAgent={window.navigator.userAgent} data={this.state.matchedData} data2={this.state.competitveStats1} data3={this.state.competitveStats2}/>
         <Footer />
       </div>
       // </Anime>
