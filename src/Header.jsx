@@ -7,9 +7,9 @@ class Header extends Component {
         <h1>OVER<span id="compare">COMPARE</span></h1>
         <nav>
           <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
+            <li>COMPARE</li>
+            <li>TOP PROS</li>
+            <li>SAVED PLAYERS</li>
           </ul>
         </nav>
       </header>
