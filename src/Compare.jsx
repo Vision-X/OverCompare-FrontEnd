@@ -114,44 +114,64 @@ const charImages = [
   }
 ];
 
+
+
 class Compare extends Component {
   constructor() {
     super();
 
   }
 
-  setData() {
-    let compStats1 = this.props.competitiveStats1;
-    let compStats2 = this.props.competitveStats2;
+  sortData() {
+    let compStats1 = this.props.data[1];
+    let compStats2 = this.props.data[2];
     console.log(compStats1, compStats2);
-
-    for (let i = 0; i < Object.entries(compStats1).length; i++) {
-      let name = Object.entries(compStats1)[i][0];
-      let data = Object.entries(Object.entries(compStats1)[i][1]).sort();
-      let data2 = Object.entries(Object.entries(compStats2)[i][1]).sort();
-      // console.log("data2............", data2);
-      // console.log("character: ", name);
-      for (let j = 0; j < data.length && j < data2.length; j++) {
-        // console.log("stat name: ", data[j][0]);
-        // console.log("stat value: ", data[j][1]);
-        // console.log("stat name2: ", data2[j][0]);
-        if (data[j][0] === data2[j][0]) {
-          // console.log("statName: " + data[j][0]);
-          // console.log("statValues: ", "p1 :" + data[j][1], "p2: " + data2[j][1]);
-          let statValue = data[j][1];
-          let statValue2 = data2[j][1];
-          // this.setState({chartData[0].y = statValue});
-          // chartData[1].y = statValue2;
-          console.log("statName: " + data[j][0]);
-          // console.log("chartData...", chartData);
-
-          // return stuff;
+    let objkeys = Object.keys(compStats1);
+    let objvals = Object.values(compStats1);
+    let objkeys2 = Object.keys(compStats2);
+    let objvals2 = Object.values(compStats2);
+    for (var prop in compStats1) {
+        if (compStats2.hasOwnProperty(prop)) {
+          // let keys1 = Object.keys(compStats1[prop]);
+          // let deeper1 = Object.values(keys1);
+          // let keys2 = Object.keys(compStats2[prop]);
+          // let deeper2 = Object.values(keys2);
+          // let stats1 = Object.keys(deeper1);
+          // deeper1.sort();
+          // deeper2.sort();
+          // console.log("__________________________")
+          // console.log("char name__________________ ", prop);
+          for (var key in compStats1[prop]) {
+            if (compStats2[prop].hasOwnProperty(key)) {
+              let statSpecific = [];
+              // console.log("hiiiii")
+              // console.log("key--:  ", key)
+              // console.log("value:  ", compStats2[prop][key])
+              // console.log("value2: ", compStats1[prop][key])
+              // console.log(Object.keys(compStats1[prop])[key])
+              // console.log(Object.values(compStats2[prop]))
+              // console.log(compStats2[key])
+              statSpecific.push(prop);
+              statSpecific.push(key);
+              // statSpecific.push(compStats1[prop]);
+              statSpecific.push(compStats1[prop][key]);
+              statSpecific.push(compStats2[prop][key]);
+              console.log(statSpecific);
+            }
+          }
+          // console.log(deeper1, "deeper1 ________________");
+          // console.log(deeper2, "deeper2 ________________");
+          // console.log(typeof deeper1)
         }
       }
     }
+
+  statsByCategory() {
+
   }
 
   componentWillMount() {
+    // document.getElementById("compare-section").classList.remove("hidden");
   }
 
   componentDidMount() {
@@ -160,18 +180,14 @@ class Compare extends Component {
 
   render() {
     {console.log(this.props)}
-    // {
-    //   console.log(this.props.data2, "compStats1");
-    // }
-    // {
-    //   console.log(this.props.data3, "compStats2");
-    // }
+    {console.log(this.props.data[1], "compStats1")}
+    {console.log(this.props.data[2], "compStats2")}
     return (
-      <section className="hidden" id="compare-section">
+      <section id="compare-section">
         <h3>MATCHED CHARACTERS</h3>
         <Tabs>
           <TabList>
-            {this.props.data
+            {this.props.data[0]
               .sort(function(a, b) {
                 if (a < b) return -1;
                 if (a > b) return 1;
@@ -194,15 +210,16 @@ class Compare extends Component {
                 );
               })}
           </TabList>
-          {this.props.data.map(character => {
+          {this.props.data[0].map(character => {
+            // this.sortData();
             // console.log(character, "character");
-            console.log(this.props.data1, "compStats1");
-            console.log(this.props.data2, "compStats2");
+            // console.log(this.props.data2, "compStats1");
+            // console.log(this.props.data3, "compStats2");
             let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
             return (
               <TabPanel>
                 <h4>{character}</h4>
-                <BarChart data={this.props.data1} data1={this.props.data2} />
+                <BarChart data={this.props.data2} data1={this.props.data3} />
               </TabPanel>
             );
           })}
