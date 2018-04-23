@@ -11,10 +11,10 @@ class InputForm extends Component {
             <input onChange={this.props.handleChange} id="input-name" name="player1" ref="player1 "type="text" placeholder="ex. KobraKai-1456"/>
             <label>COMPARE TO</label>
             <input onChange={this.props.handleChange} id="compare-to" name="player2" ref="player2" type="text" placeholder="ex. MiagiDo-90911"/>
-            <input id="submit" type="submit" name="submit" value="GO!" disabled={this.props.disabled} toggle={this.props.buttonEnableToggle} />
+            <input id="submit" onClick={this.props.onClick} type="submit" name="submit" value="GO!" disabled={this.props.disabled} toggle={this.props.buttonEnableToggle} />
           </form>
           <div id="compare-mini" className="">
-            <input onClick={this.props.onClick} id="compare-btn" type="button" name="compare" value="HIDE" />
+            <input id="compare-btn" onClick={this.props.onClick} type="button" name="compare" value="HIDE" />
           </div>
         </section>
     )

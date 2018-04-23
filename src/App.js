@@ -21,8 +21,6 @@ class App extends Component {
       player1: "",
       player2: "",
       matchedData: [],
-      competitiveStats1: [],
-      competitiveStats2: [],
       chartData: [{x: 2, y: 0}, {x: 2, y: 0}],
       isMounted: "none"
     };
@@ -57,20 +55,19 @@ class App extends Component {
     for (let character in comp1) {
       if (comp2.hasOwnProperty(character)) {
         // console.log(comp1[character].general_stats);
+        // console.log(character, ".....", stats[character], "stats[character] line60");
+        charArray.push(character);
         stats[character] = comp1[character].general_stats;
         stats2[character] = comp2[character].general_stats;
-        // console.log(character, ".....", stats[character], "stats[character] line60");
-        this.setState({ competitiveStats1: stats });
-        this.setState({ competitiveStats2: stats2 });
-        console.log("competitiveStats1...", this.state.competitiveStats1);
-        console.log("competitiveStats2...", this.state.competitiveStats2);
-
-        charArray.push(character);
-        this.setState({ matchedData: charArray });
         this.setState({ isMounted: "none"})
         // console.log(charArray);
       }
     }
+    this.setState({ matchedData: charArray });
+    this.setState({ competitiveStats1: stats });
+    this.setState({ competitiveStats2: stats2 });
+    console.log("competitiveStats1...", this.state.competitiveStats1);
+    console.log("competitiveStats2...", this.state.competitiveStats2);
     // for (let i = 0; i < Object.entries(stats).length; i++) {
     //   let name = Object.entries(stats)[i][0];
     //   let data = Object.entries(Object.entries(stats)[i][1]).sort();
@@ -172,19 +169,17 @@ class App extends Component {
       // document.getElementById("submit").setAttribute("disabled", "true");
       // document.querySelector(".input-section").classList.add("compare-shrink");
       document.querySelector(".input-form").classList.add("hidden");
-      document.querySelector("#compare-btn").value = "SHOW";
-      clickCount++;
+      // clickCount++;
+      let compareBtn = document.getElementById("compare-btn");
+      compareBtn.value = "SHOW";
       event.target.reset();
       this.setState({ isMounted: "inline-block"});
       this.fetchFirstPlayer()
         .then(() => {
           setTimeout(() => {
-            this.fetchSecondPlayer().then(this.findMatches);
+            return this.fetchSecondPlayer().then(this.findMatches);
           }, 1001);
         })
-        .then(() => {
-          document.getElementById("compare-section").classList.remove("hidden");
-        });
     }
   };
 
@@ -201,6 +196,26 @@ class App extends Component {
         clickCount++;
         document.querySelector(".input-form").classList.remove("hidden");
       }
+      if (event.target.id === "submit") {
+        document.querySelector("#compare-btn").value = "SHOW";
+        clickCount++;
+      }
+  }
+
+  renderCompare() {
+    if (this.state.matchedData.length > 1) {
+      return (
+        <Compare userAgent={window.navigator.userAgent} data={ [this.state.matchedData, this.state.competitveStats1, this.state.competitveStats2] } firstplayer={this.state.competitveStats1} secondplayer={this.state.competitveStats2}/>
+      )
+    } else if (!this.state.competitveStats2) {
+      return (
+        <MDSpinner style={{display: this.state.isMounted}} />
+      )
+    } else {
+      return (
+        <h2>Sorry, matches could not be found</h2>
+      )
+    }
   }
 
   componentWillMount() {
@@ -225,8 +240,7 @@ class App extends Component {
           onClick={this.handleClick}
         />
         <AddPlayer />
-        <MDSpinner style={{display: this.state.isMounted}} />
-        <Compare userAgent={window.navigator.userAgent} data={this.state.matchedData} data2={this.state.competitveStats1} data3={this.state.competitveStats2}/>
+        {this.renderCompare()}
         <Footer />
       </div>
       // </Anime>
