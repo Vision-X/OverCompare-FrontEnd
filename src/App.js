@@ -27,6 +27,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.renderCompare = this.renderCompare.bind(this);
   }
 
   get buttonEnabled() {
@@ -203,13 +204,19 @@ class App extends Component {
   }
 
   renderCompare() {
-    if (this.state.matchedData.length > 1) {
+    console.log(this.state, "DAN its the state");
+    if (this.state.competitiveStats2) {
+      // debugger;
       return (
-        <Compare userAgent={window.navigator.userAgent} data={ [this.state.matchedData, this.state.competitveStats1, this.state.competitveStats2] } firstplayer={this.state.competitveStats1} secondplayer={this.state.competitveStats2}/>
+        <Compare userAgent={window.navigator.userAgent} data={ [this.state.matchedData, this.state.competitiveStats1, this.state.competitiveStats2] } firstplayer={this.state.competitveStats1} secondplayer={this.state.competitveStats2} />
       )
-    } else if (!this.state.competitveStats2) {
+    } else if (!this.state.competitiveStats2) {
       return (
-        <MDSpinner style={{display: this.state.isMounted}} />
+        <MDSpinner className="spinner-widget"
+                   style={{display: this.state.isMounted}}
+                   size={200}
+                   singleColor="#25BEFC"
+        />
       )
     } else {
       return (

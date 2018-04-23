@@ -175,13 +175,14 @@ class Compare extends Component {
   }
 
   componentDidMount() {
+    // console.log(this.props.data[1], "for fucks sake!!!!!!!!!!!!!!!!!!!!");
     // console.log(this.setData(), "setData function call")
   }
 
   render() {
-    {console.log(this.props)}
-    {console.log(this.props.data[1], "compStats1")}
-    {console.log(this.props.data[2], "compStats2")}
+    {console.log(this.props, "props")}
+    {console.log(this.props.data[1], "firstplayer")}
+    {console.log(this.props.data[2], "secondplayer")}
     return (
       <section id="compare-section">
         <h3>MATCHED CHARACTERS</h3>
