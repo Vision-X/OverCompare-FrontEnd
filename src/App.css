@@ -210,6 +210,10 @@ svg {
   width: 80%;
 }
 
+.spinner-widget {
+  margin: 1rem auto !important;
+}
+
 #compare-section {
   min-height: 100vh;
   padding: 1rem 0 0 0;

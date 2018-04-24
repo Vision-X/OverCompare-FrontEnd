@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import BarChart from "react-svg-bar-chart";
 
-// const barData = [{ x: 2, y: 3 }, { x: 6, y: 4 }];
 const charImages = [
   {
     ana:
@@ -114,12 +113,9 @@ const charImages = [
   }
 ];
 
-
-
 class Compare extends Component {
   constructor() {
     super();
-
   }
 
   sortData() {
@@ -130,58 +126,64 @@ class Compare extends Component {
     let objvals = Object.values(compStats1);
     let objkeys2 = Object.keys(compStats2);
     let objvals2 = Object.values(compStats2);
+    let statsBundle = [];
+    let statSpecific = [];
     for (var prop in compStats1) {
-        if (compStats2.hasOwnProperty(prop)) {
-          // let keys1 = Object.keys(compStats1[prop]);
-          // let deeper1 = Object.values(keys1);
-          // let keys2 = Object.keys(compStats2[prop]);
-          // let deeper2 = Object.values(keys2);
-          // let stats1 = Object.keys(deeper1);
-          // deeper1.sort();
-          // deeper2.sort();
-          // console.log("__________________________")
-          // console.log("char name__________________ ", prop);
-          for (var key in compStats1[prop]) {
-            if (compStats2[prop].hasOwnProperty(key)) {
-              let statSpecific = [];
-              // console.log("hiiiii")
-              // console.log("key--:  ", key)
-              // console.log("value:  ", compStats2[prop][key])
-              // console.log("value2: ", compStats1[prop][key])
-              // console.log(Object.keys(compStats1[prop])[key])
-              // console.log(Object.values(compStats2[prop]))
-              // console.log(compStats2[key])
-              statSpecific.push(prop);
-              statSpecific.push(key);
-              // statSpecific.push(compStats1[prop]);
-              statSpecific.push(compStats1[prop][key]);
-              statSpecific.push(compStats2[prop][key]);
-              console.log(statSpecific);
-            }
+      if (compStats2.hasOwnProperty(prop)) {
+        // let keys1 = Object.keys(compStats1[prop]);
+        // let deeper1 = Object.values(keys1);
+        // let keys2 = Object.keys(compStats2[prop]);
+        // let deeper2 = Object.values(keys2);
+        // let stats1 = Object.keys(deeper1);
+        // deeper1.sort();
+        // deeper2.sort();
+        // console.log("__________________________")
+        console.log("char name__________________ ", prop);
+        for (var key in compStats1[prop]) {
+          console.log("compStats1[prop]-----", compStats1[prop]);
+          if (compStats2[prop].hasOwnProperty(key)) {
+            // console.log("hiiiii")
+            console.log("char-:  ", prop);
+            console.log("key--:  ", key);
+            // console.log("value:  ", compStats2[prop][key])
+            // console.log("value2: ", compStats1[prop][key])
+            console.log(Object.keys(compStats1[prop])[key]);
+            console.log(Object.values(compStats2[prop]));
+            // console.log(compStats2[key])
+            statsBundle.push(prop);
+            statsBundle.push(key);
+            // statSpecific.push(compStats1[prop]);
+            statsBundle.push(compStats1[prop][key]);
+            statsBundle.push(compStats2[prop][key]);
+            statSpecific.push(statsBundle);
+            console.log(statSpecific);
           }
-          // console.log(deeper1, "deeper1 ________________");
-          // console.log(deeper2, "deeper2 ________________");
-          // console.log(typeof deeper1)
         }
+        // console.log(deeper1, "deeper1 ________________");
+        // console.log(deeper2, "deeper2 ________________");
+        // console.log(typeof deeper1)
       }
+      // console.log("statSpecific arrays", statSpecific);
+      return statSpecific;
     }
-
-  statsByCategory() {
-
   }
 
-  componentWillMount() {
-    // document.getElementById("compare-section").classList.remove("hidden");
-  }
+  statsByCategory() {}
 
-  componentDidMount() {
-    // console.log(this.setData(), "setData function call")
-  }
+  componentWillMount() {}
+
+  componentDidMount() {}
 
   render() {
-    {console.log(this.props)}
-    {console.log(this.props.data[1], "compStats1")}
-    {console.log(this.props.data[2], "compStats2")}
+    {
+      console.log(this.props, "props");
+    }
+    {
+      console.log(this.props.data[1], "firstplayer");
+    }
+    {
+      console.log(this.props.data[2], "secondplayer");
+    }
     return (
       <section id="compare-section">
         <h3>MATCHED CHARACTERS</h3>
@@ -212,9 +214,8 @@ class Compare extends Component {
           </TabList>
           {this.props.data[0].map(character => {
             // this.sortData();
-            // console.log(character, "character");
-            // console.log(this.props.data2, "compStats1");
-            // console.log(this.props.data3, "compStats2");
+            console.log(character, "character");
+            console.log(this.sortData());
             let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
             return (
               <TabPanel>

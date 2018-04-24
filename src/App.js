@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import Anime from 'react-anime';
 import "./App.css";
 import "react-tabs/style/react-tabs.css";
 import { Header } from "./Header.jsx";
@@ -27,6 +26,7 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.renderCompare = this.renderCompare.bind(this);
   }
 
   get buttonEnabled() {
@@ -63,9 +63,12 @@ class App extends Component {
         // console.log(charArray);
       }
     }
-    this.setState({ matchedData: charArray });
-    this.setState({ competitiveStats1: stats });
-    this.setState({ competitiveStats2: stats2 });
+    this.setState({ matchedData: charArray,
+                    competitiveStats1: stats,
+                    competitiveStats2: stats2
+                  });
+    // this.setState({ competitiveStats1: stats });
+    // this.setState({ competitiveStats2: stats2 });
     console.log("competitiveStats1...", this.state.competitiveStats1);
     console.log("competitiveStats2...", this.state.competitiveStats2);
     // for (let i = 0; i < Object.entries(stats).length; i++) {
@@ -196,20 +199,20 @@ class App extends Component {
         clickCount++;
         document.querySelector(".input-form").classList.remove("hidden");
       }
-      if (event.target.id === "submit") {
-        document.querySelector("#compare-btn").value = "SHOW";
-        clickCount++;
-      }
   }
 
   renderCompare() {
-    if (this.state.matchedData.length > 1) {
+    if (this.state.competitiveStats2) {
       return (
-        <Compare userAgent={window.navigator.userAgent} data={ [this.state.matchedData, this.state.competitveStats1, this.state.competitveStats2] } firstplayer={this.state.competitveStats1} secondplayer={this.state.competitveStats2}/>
+        <Compare userAgent={window.navigator.userAgent} data={ [this.state.matchedData, this.state.competitiveStats1, this.state.competitiveStats2] } firstplayer={this.state.competitveStats1} secondplayer={this.state.competitveStats2} />
       )
-    } else if (!this.state.competitveStats2) {
+    } else if (!this.state.competitiveStats2) {
       return (
-        <MDSpinner style={{display: this.state.isMounted}} />
+        <MDSpinner className="spinner-widget"
+                   style={{display: this.state.isMounted}}
+                   size={200}
+                   singleColor="#25BEFC"
+        />
       )
     } else {
       return (
@@ -228,7 +231,6 @@ class App extends Component {
 
   render() {
     return (
-      // <Anime opacity={[0, 1]} translateY="2rem" delay={(e, i) => i * 10000}>
       <div className="App">
         <Header />
         <InputForm
@@ -243,7 +245,6 @@ class App extends Component {
         {this.renderCompare()}
         <Footer />
       </div>
-      // </Anime>
     );
   }
 }
