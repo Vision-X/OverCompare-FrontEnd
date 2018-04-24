@@ -211,7 +211,7 @@ svg {
 }
 
 .spinner-widget {
-  margin: 1rem 25% !important;
+  margin: 1rem auto !important;
 }
 
 #compare-section {
