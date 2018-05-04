@@ -172,9 +172,9 @@ class App extends Component {
       // document.getElementById("submit").setAttribute("disabled", "true");
       // document.querySelector(".input-section").classList.add("compare-shrink");
       document.querySelector(".input-form").classList.add("hidden");
-      // clickCount++;
       let compareBtn = document.getElementById("compare-btn");
       compareBtn.value = "SHOW";
+      clickCount++;
       event.target.reset();
       this.setState({ isMounted: "inline-block"});
       this.fetchFirstPlayer()
@@ -191,13 +191,11 @@ class App extends Component {
       if (event.target.value === "HIDE") {
         event.target.value = (clickCount % 2 === 0) ? "SHOW" : "HIDE";
         clickCount++;
-        // document.querySelector(".input-section").classList.add("compare-shrink");
-        document.querySelector(".input-form").classList.add("hidden");
+        document.querySelector(".input-form").classList.toggle("hidden");
       } else {
-        // document.querySelector(".input-section").classList.remove("compare-shrink");
         event.target.value = (clickCount % 2 === 0) ? "SHOW" : "HIDE";
         clickCount++;
-        document.querySelector(".input-form").classList.remove("hidden");
+        document.querySelector(".input-form").classList.toggle("hidden");
       }
   }
 

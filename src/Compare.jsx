@@ -126,8 +126,8 @@ class Compare extends Component {
     let objvals = Object.values(compStats1);
     let objkeys2 = Object.keys(compStats2);
     let objvals2 = Object.values(compStats2);
-    let statsBundle = [];
-    let statSpecific = [];
+    // let statsBundle = [];
+    let statSpecific = {};
     for (var prop in compStats1) {
       if (compStats2.hasOwnProperty(prop)) {
         // let keys1 = Object.keys(compStats1[prop]);
@@ -137,35 +137,54 @@ class Compare extends Component {
         // let stats1 = Object.keys(deeper1);
         // deeper1.sort();
         // deeper2.sort();
+        // console.log(deeper2);
+        // console.log(deeper1);
         // console.log("__________________________")
         console.log("char name__________________ ", prop);
-        for (var key in compStats1[prop]) {
-          console.log("compStats1[prop]-----", compStats1[prop]);
-          if (compStats2[prop].hasOwnProperty(key)) {
-            // console.log("hiiiii")
-            console.log("char-:  ", prop);
-            console.log("key--:  ", key);
-            // console.log("value:  ", compStats2[prop][key])
-            // console.log("value2: ", compStats1[prop][key])
-            console.log(Object.keys(compStats1[prop])[key]);
-            console.log(Object.values(compStats2[prop]));
-            // console.log(compStats2[key])
-            statsBundle.push(prop);
-            statsBundle.push(key);
-            // statSpecific.push(compStats1[prop]);
-            statsBundle.push(compStats1[prop][key]);
-            statsBundle.push(compStats2[prop][key]);
-            statSpecific.push(statsBundle);
-            console.log(statSpecific);
-          }
-        }
+        // for (var i = 0; i < keys2.length; i++) {
+        //   if (keys1[i] === keys2[i]) {
+        //     console.log("HAYYYYYYYYYYYYYYYYYYYYYY");
+        //   } else {
+        //   console.log(prop, '[prop]');
+        //   console.log(keys2[i], "compStats2[prop][i]")
+        //   let charSpecific = [];
+        //   charSpecific.push(keys2[i]);
+        //   charSpecific.push(deeper2[i]);
+        //   statSpecific[prop] += charSpecific;
+        //   }
+        // }
+        // for (var key in compStats1[prop]) {
+        //   console.log("compStats1[prop]-----", compStats1[prop]);
+        //   if (compStats2[prop].hasOwnProperty(key)) {
+        //     // console.log("hiiiii")
+        //     let statsBundle = [];
+        //     console.log("char-:  ", prop);
+        //     console.log("key--:  ", key);
+        //     // console.log("value:  ", compStats2[prop][key])
+        //     // console.log("value2: ", compStats1[prop][key])
+        //     console.log(Object.keys(compStats1[prop])[key]);
+        //     console.log(Object.values(compStats2[prop]));
+        //     // console.log(compStats2[key])
+        //     statsBundle.push(prop);
+        //     statsBundle.push(key);
+        //     // statSpecific.push(compStats1[prop]);
+        //     statsBundle.push(compStats1[prop][key]);
+        //     statsBundle.push(compStats2[prop][key]);
+        //     statSpecific[prop] = statsBundle;
+        //     console.log(statSpecific);
+        //   } else if (!compStats1[prop].hasOwnProperty(key)) {
+        //     console.log("fucked for comp1");
+        //     console.log("NOPE nope nopeeee  ");
+        //   }
+        // }
         // console.log(deeper1, "deeper1 ________________");
         // console.log(deeper2, "deeper2 ________________");
         // console.log(typeof deeper1)
       }
       // console.log("statSpecific arrays", statSpecific);
-      return statSpecific;
     }
+    // console.log(statSpecific);
+    // return statSpecific;
   }
 
   statsByCategory() {}
