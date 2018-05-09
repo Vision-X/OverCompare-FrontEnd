@@ -126,6 +126,7 @@ class Compare extends Component {
     let objvals = Object.values(compStats1);
     let objkeys2 = Object.keys(compStats2);
     let objvals2 = Object.values(compStats2);
+    console.log(this.props.data[0], "data[0]");
     // let statsBundle = [];
     let statSpecific = {};
     for (var prop in compStats1) {
@@ -141,50 +142,24 @@ class Compare extends Component {
         // console.log(deeper1);
         // console.log("__________________________")
         console.log("char name__________________ ", prop);
-        // for (var i = 0; i < keys2.length; i++) {
-        //   if (keys1[i] === keys2[i]) {
-        //     console.log("HAYYYYYYYYYYYYYYYYYYYYYY");
-        //   } else {
-        //   console.log(prop, '[prop]');
-        //   console.log(keys2[i], "compStats2[prop][i]")
-        //   let charSpecific = [];
-        //   charSpecific.push(keys2[i]);
-        //   charSpecific.push(deeper2[i]);
-        //   statSpecific[prop] += charSpecific;
-        //   }
-        // }
-        // for (var key in compStats1[prop]) {
-        //   console.log("compStats1[prop]-----", compStats1[prop]);
-        //   if (compStats2[prop].hasOwnProperty(key)) {
-        //     // console.log("hiiiii")
-        //     let statsBundle = [];
-        //     console.log("char-:  ", prop);
-        //     console.log("key--:  ", key);
-        //     // console.log("value:  ", compStats2[prop][key])
-        //     // console.log("value2: ", compStats1[prop][key])
-        //     console.log(Object.keys(compStats1[prop])[key]);
-        //     console.log(Object.values(compStats2[prop]));
-        //     // console.log(compStats2[key])
-        //     statsBundle.push(prop);
-        //     statsBundle.push(key);
-        //     // statSpecific.push(compStats1[prop]);
-        //     statsBundle.push(compStats1[prop][key]);
-        //     statsBundle.push(compStats2[prop][key]);
-        //     statSpecific[prop] = statsBundle;
-        //     console.log(statSpecific);
-        //   } else if (!compStats1[prop].hasOwnProperty(key)) {
-        //     console.log("fucked for comp1");
-        //     console.log("NOPE nope nopeeee  ");
-        //   }
-        // }
-        // console.log(deeper1, "deeper1 ________________");
-        // console.log(deeper2, "deeper2 ________________");
-        // console.log(typeof deeper1)
+
       }
       // console.log("statSpecific arrays", statSpecific);
     }
     // console.log(statSpecific);
     // return statSpecific;
+  }
+
+  matchedData(character) {
+    let charName = character;
+    let compStats1 = this.props.data[1];
+    let compStats2 = this.props.data[2];
+    if (compStats1[charName] === compStats2[charName]) {
+        console.log(character, "character");
+        console.log(charName, "charName");
+        console.log(compStats1[charName]);
+        console.log(compStats2[charName]);
+    }
   }
 
   statsByCategory() {}
@@ -194,15 +169,6 @@ class Compare extends Component {
   componentDidMount() {}
 
   render() {
-    {
-      console.log(this.props, "props");
-    }
-    {
-      console.log(this.props.data[1], "firstplayer");
-    }
-    {
-      console.log(this.props.data[2], "secondplayer");
-    }
     return (
       <section id="compare-section">
         <h3>MATCHED CHARACTERS</h3>
@@ -235,6 +201,7 @@ class Compare extends Component {
             // this.sortData();
             console.log(character, "character");
             console.log(this.sortData());
+            console.log(this.matchedData(character), "matchedData fn");
             let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
             return (
               <TabPanel>
