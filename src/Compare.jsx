@@ -122,51 +122,54 @@ class Compare extends Component {
     let compStats1 = this.props.data[1];
     let compStats2 = this.props.data[2];
     console.log(compStats1, compStats2);
-    let objkeys = Object.keys(compStats1);
-    let objvals = Object.values(compStats1);
-    let objkeys2 = Object.keys(compStats2);
-    let objvals2 = Object.values(compStats2);
-    console.log(this.props.data[0], "data[0]");
-    // let statsBundle = [];
     let statSpecific = {};
-    for (var prop in compStats1) {
-      if (compStats2.hasOwnProperty(prop)) {
-        // let keys1 = Object.keys(compStats1[prop]);
-        // let deeper1 = Object.values(keys1);
-        // let keys2 = Object.keys(compStats2[prop]);
-        // let deeper2 = Object.values(keys2);
-        // let stats1 = Object.keys(deeper1);
-        // deeper1.sort();
-        // deeper2.sort();
-        // console.log(deeper2);
-        // console.log(deeper1);
-        // console.log("__________________________")
-        console.log("char name__________________ ", prop);
-
+    for (var key in compStats1) {
+      if (compStats2.hasOwnProperty(key)) {
+        console.log("char name__________________ ", key);
+        for (var prop in compStats2[key]) {
+          if (compStats1[key][prop]) {
+            console.log("prop", prop);
+            console.log(compStats1[key][prop]);
+            console.log(compStats2[key][prop]);
+          }
+        }
       }
       // console.log("statSpecific arrays", statSpecific);
     }
-    // console.log(statSpecific);
-    // return statSpecific;
-  }
+  };
 
-  matchedData(character) {
-    let charName = character;
+  thoseStats(charname) {
     let compStats1 = this.props.data[1];
     let compStats2 = this.props.data[2];
-    if (compStats1[charName] === compStats2[charName]) {
-        console.log(character, "character");
-        console.log(charName, "charName");
-        console.log(compStats1[charName]);
-        console.log(compStats2[charName]);
+    if (compStats1.hasOwnProperty(charname) && compStats2.hasOwnProperty(charname)) {
+      for (var prop in compStats1[charname]) {
+        let category = prop;
+        let statValue1 = compStats1[charname][prop];
+        let statValue2 = compStats2[charname][prop];
+        this.mockDisplay(category, statValue1, statValue2);
+      }
     }
   }
 
-  statsByCategory() {}
+  mockDisplay(category, statValue1, statValue2) {
+    console.log("mockDisplay ........");
+    console.log("cat : ", category);
+    console.log("sv1 : ", statValue1);
+    console.log("sv2 : ", statValue2);
+    let player1 = this.props.names[0];
+    let player2 = this.props.names[1];
+    return (
+      <div>
+        <h3>{category}</h3>
+        <p>{player1}: {statValue1}</p>
+        <p>{player2}: {statValue2}</p>
+      </div>
+    )
+  };
 
-  componentWillMount() {}
+  statsByCategory() {};
 
-  componentDidMount() {}
+  componentDidMount() {};
 
   render() {
     return (
@@ -200,13 +203,38 @@ class Compare extends Component {
           {this.props.data[0].map(character => {
             // this.sortData();
             console.log(character, "character");
-            console.log(this.sortData());
-            console.log(this.matchedData(character), "matchedData fn");
-            let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
+            // console.log(this.sortData());
+            // let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
+            var nodes = [];
+            var category;
+            var statValue1;
+            var statValue2;
+            let compStats1 = this.props.data[1];
+            let compStats2 = this.props.data[2];
+            if (compStats1.hasOwnProperty(character) && compStats2.hasOwnProperty(character)) {
+              for (var prop in compStats1[character]) {
+                category = prop.replace(/_/g, ' ');
+                (compStats1[character][prop] === undefined)
+                              ? statValue1 = "0"
+                              : statValue1 = compStats1[character][prop];
+                (compStats2[character][prop] === undefined)
+                              ? statValue2 = "0"
+                              : statValue2 = compStats2[character][prop];
+                nodes.push(this.mockDisplay(category, statValue1, statValue2));
+              }
+            }
+            // Nishik-1477
             return (
               <TabPanel>
                 <h4>{character}</h4>
-                <BarChart data={this.props.data2} data1={this.props.data3} />
+                {nodes}
+                {/*{this.mockDisplay(category, statValue1, statValue2)}*/}
+                {/*<div>
+                  <p>{category}</p>
+                  <p>player 1: {statValue1}</p>
+                  <p>player 2: {statValue2}</p>
+                </div>*/}
+                {/*<BarChart data={this.props.data2} data1={this.props.data3} />*/}
               </TabPanel>
             );
           })}
