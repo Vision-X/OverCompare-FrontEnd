@@ -152,10 +152,10 @@ class Compare extends Component {
   }
 
   mockDisplay(category, statValue1, statValue2) {
-    console.log("mockDisplay ........");
-    console.log("cat : ", category);
-    console.log("sv1 : ", statValue1);
-    console.log("sv2 : ", statValue2);
+    // console.log("mockDisplay ........");
+    // console.log("cat : ", category);
+    // console.log("sv1 : ", statValue1);
+    // console.log("sv2 : ", statValue2);
     let player1 = this.props.names[0];
     let player2 = this.props.names[1];
     return (
@@ -203,7 +203,6 @@ class Compare extends Component {
           {this.props.data[0].map(character => {
             // this.sortData();
             console.log(character, "character");
-            // console.log(this.sortData());
             // let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
             var nodes = [];
             var category;
@@ -213,14 +212,30 @@ class Compare extends Component {
             let compStats2 = this.props.data[2];
             if (compStats1.hasOwnProperty(character) && compStats2.hasOwnProperty(character)) {
               for (var prop in compStats1[character]) {
+                let cs1 = compStats1[character][prop];
+                let cs2 = compStats2[character][prop];
                 category = prop.replace(/_/g, ' ');
-                (compStats1[character][prop] === undefined)
-                              ? statValue1 = "0"
-                              : statValue1 = compStats1[character][prop];
-                (compStats2[character][prop] === undefined)
-                              ? statValue2 = "0"
-                              : statValue2 = compStats2[character][prop];
-                nodes.push(this.mockDisplay(category, statValue1, statValue2));
+                if (prop.includes("time")) {
+                  if (cs1 === undefined ) statValue1 = "0:00"
+                  if (cs2 === undefined ) statValue2 = "0:00"
+                  const convertToHHMM = time => {
+                    var hrs = parseInt(Number(time));
+                    var min = Number.parseFloat((Number(time)-hrs) * 60).toFixed(0);
+                    if (hrs < 10) hrs = "0" + `${hrs}`;
+                    if (min < 10) min = "0" + `${min}`;
+                    return hrs+':'+min;
+                  }
+                  statValue1 = convertToHHMM(compStats1[character][prop])
+                  statValue2 = convertToHHMM(compStats2[character][prop])
+                  nodes.push(this.mockDisplay(category, statValue1, statValue2))
+
+                } else {
+                  if (cs1 === undefined ) statValue1 = "0"
+                  if (cs2 === undefined ) statValue2 = "0"
+                  statValue1 = compStats1[character][prop];
+                  statValue2 = compStats2[character][prop];
+                  nodes.push(this.mockDisplay(category, statValue1, statValue2));
+                }
               }
             }
             // Nishik-1477
@@ -228,12 +243,6 @@ class Compare extends Component {
               <TabPanel>
                 <h4>{character}</h4>
                 {nodes}
-                {/*{this.mockDisplay(category, statValue1, statValue2)}*/}
-                {/*<div>
-                  <p>{category}</p>
-                  <p>player 1: {statValue1}</p>
-                  <p>player 2: {statValue2}</p>
-                </div>*/}
                 {/*<BarChart data={this.props.data2} data1={this.props.data3} />*/}
               </TabPanel>
             );
