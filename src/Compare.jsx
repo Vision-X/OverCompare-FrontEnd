@@ -114,48 +114,8 @@ const charImages = [
 ];
 
 class Compare extends Component {
-  constructor() {
-    super();
-  }
 
-  sortData() {
-    let compStats1 = this.props.data[1];
-    let compStats2 = this.props.data[2];
-    console.log(compStats1, compStats2);
-    let statSpecific = {};
-    for (var key in compStats1) {
-      if (compStats2.hasOwnProperty(key)) {
-        console.log("char name__________________ ", key);
-        for (var prop in compStats2[key]) {
-          if (compStats1[key][prop]) {
-            console.log("prop", prop);
-            console.log(compStats1[key][prop]);
-            console.log(compStats2[key][prop]);
-          }
-        }
-      }
-      // console.log("statSpecific arrays", statSpecific);
-    }
-  };
-
-  thoseStats(charname) {
-    let compStats1 = this.props.data[1];
-    let compStats2 = this.props.data[2];
-    if (compStats1.hasOwnProperty(charname) && compStats2.hasOwnProperty(charname)) {
-      for (var prop in compStats1[charname]) {
-        let category = prop;
-        let statValue1 = compStats1[charname][prop];
-        let statValue2 = compStats2[charname][prop];
-        this.mockDisplay(category, statValue1, statValue2);
-      }
-    }
-  }
-
-  mockDisplay(category, statValue1, statValue2) {
-    // console.log("mockDisplay ........");
-    // console.log("cat : ", category);
-    // console.log("sv1 : ", statValue1);
-    // console.log("sv2 : ", statValue2);
+  mockDisplay = (category, statValue1, statValue2) => {
     let player1 = this.props.names[0];
     let player2 = this.props.names[1];
     return (
@@ -167,9 +127,135 @@ class Compare extends Component {
     )
   };
 
-  statsByCategory() {};
+  convertToHHMM = time => {
+    var hrs = parseInt(Number(time));
+    var min = Number.parseFloat((Number(time)-hrs) * 60).toFixed(0);
+    if (hrs < 10) hrs = "0" + `${hrs}`;
+    if (min < 10) min = "0" + `${min}`;
+    return hrs+':'+min;
+  }
 
-  componentDidMount() {};
+  categoryMatching = (char, nodes) => {
+    let category;
+    let statValue1;
+    let statValue2;
+    let p1 = this.props.data[1];
+    let p2 = this.props.data[2];
+    let cs1;
+    let cs2;
+    let keysArray = [...Object.keys(p1[char]), ...Object.keys(p2[char])].sort();
+    let sortedKeys = [ ...new Set(keysArray)];
+    // console.log(sortedKeys);
+    for (let i = 0; i < sortedKeys.length; i++) {
+      // let filtKey = sortedKeys[i].replace(/s/g, '');
+      // console.log(filtKey);
+      cs1 = p1[char][sortedKeys[i]];
+      cs2 = p2[char][sortedKeys[i]];
+      category = sortedKeys[i].replace(/_/g, ' ');
+      if (cs1 === undefined && cs2 !== undefined) {
+        // console.log("p1 missing it...", sortedKeys[i], cs2);
+        // if (sortedKeys.indexOf(sortedKeys[i-2]) > -1) {
+        //   if (sortedKeys[i-2].replace(/s/g, '') === filtKey) {
+        //     console.log("||||||| semi matching keyyyyyys ||||||||-2 ", sortedKeys[i-2], filtKey);
+        //     category = sortedKeys[i-2].replace(/_/g, ' ');
+        //     statValue1 = p1[char][sortedKeys[i-2]]
+        //     statValue2 = p2[char][sortedKeys[i]]
+        //   }
+        // }
+        // if (sortedKeys.indexOf(sortedKeys[i-1]) > -1) {
+        //   if (sortedKeys[i-1].replace(/s/g, '') === filtKey) {
+        //     console.log("||||||| semi matching keyyyyyys ||||||||-1 ", sortedKeys[i-1], filtKey);
+        //     category = sortedKeys[i-1].replace(/_/g, ' ');
+        //     statValue1 = p1[char][sortedKeys[i-1]]
+        //     statValue2 = cs2
+        //   }
+        // }
+        // if (sortedKeys.indexOf(sortedKeys[i+1]) > -1) {
+        //   if (sortedKeys[i+1].replace(/s/g, '') === filtKey) {
+        //     console.log("||||||| semi matching keyyyyyys ||||||||+1 ", sortedKeys[i+1], filtKey);
+        //     category = sortedKeys[i+1].replace(/_/g, ' ');
+        //     statValue1 = p1[char][sortedKeys[i+1]]
+        //     statValue2 = cs2
+        //   }
+        // }
+        // if (sortedKeys.indexOf(sortedKeys[i+2]) > -1) {
+        //   if (sortedKeys[i+2].replace(/s/g, '') === filtKey) {
+        //     console.log("||||||| semi matching keyyyyyys ||||||||+2 ", sortedKeys[i+2], filtKey);
+        //     category = sortedKeys[i+2].replace(/_/g, ' ');
+        //     statValue1 = p1[char][sortedKeys[i+2]]
+        //     statValue2 = cs2
+        //   }
+        // }
+          if (sortedKeys[i].includes("time")) {
+            statValue1 = "0:00" ;
+            statValue2 = this.convertToHHMM(cs2)
+          } else {
+            statValue1 = "0";
+            statValue2 = cs2;
+          }
+          // nodes.push(this.mockDisplay(category, statValue1, statValue2))
+      } else if (cs2 === undefined && cs1 !== undefined) {
+        // console.log("p2 missing it...", sortedKeys[i], cs1);
+        // if (sortedKeys.indexOf(sortedKeys[i-2]) > -1) {
+        //   if (sortedKeys[i-2].replace(/s/g, '') === filtKey) {
+        //     console.log("||||||| semi matching keyyyyyys ||||||||-2 ", sortedKeys[i-2], filtKey);
+        //     category = sortedKeys[i-2].replace(/_/g, ' ');
+        //     statValue1 = cs1
+        //     statValue2 = p2[char][sortedKeys[i-2]]
+        //   }
+        // }
+        // if (sortedKeys.indexOf(sortedKeys[i-1]) > -1) {
+        //   if (sortedKeys[i-1].replace(/s/g, '') === filtKey) {
+        //     console.log("||||||| semi matching keyyyyyys ||||||||-1 ", sortedKeys[i-1], filtKey);
+        //     category = sortedKeys[i-1].replace(/_/g, ' ');
+        //     statValue1 = cs1
+        //     statValue2 = p2[char][sortedKeys[i-1]]
+        //   }
+        // }
+        // if (sortedKeys.indexOf(sortedKeys[i+1]) > -1) {
+        //   if (sortedKeys[i+1].replace(/s/g, '') === filtKey) {
+        //     console.log("||||||| semi matching keyyyyyys ||||||||+1 ", sortedKeys[i+1], filtKey);
+        //     category = sortedKeys[i+1].replace(/_/g, ' ');
+        //     statValue1 = cs1
+        //     statValue2 = p2[char][sortedKeys[i+1]]
+        //   }
+        // }
+        // if (sortedKeys.indexOf(sortedKeys[i+2]) > -1) {
+        //   if (sortedKeys[i+2].replace(/s/g, '') === filtKey) {
+        //     console.log("||||||| semi matching keyyyyyys ||||||||+2 ", sortedKeys[i+2], filtKey);
+        //     category = sortedKeys[i+2].replace(/_/g, ' ');
+        //     statValue1 = cs1
+        //     statValue2 = p2[char][sortedKeys[i+2]]
+        //   }
+        // }
+          if (sortedKeys[i].includes("time")) {
+            statValue2 = "0:00"
+            statValue1 = this.convertToHHMM(cs1);
+          } else {
+            statValue2 = "0";
+            statValue1 = cs1;
+          }
+          // nodes.push(this.mockDisplay(category, statValue1, statValue2))
+      } else if (cs1 !== undefined && cs2 !== undefined) {
+          if (sortedKeys[i].includes("time")) {
+              statValue1 = this.convertToHHMM(cs1)
+              statValue2 = this.convertToHHMM(cs2)
+            // nodes.push(this.mockDisplay(category, statValue1, statValue2))
+          } else {
+              statValue1 = cs1;
+              statValue2 = cs2;
+            // nodes.push(this.mockDisplay(category, statValue1, statValue2));
+        }
+      } else {
+        console.log("WHAT IN THE FUCK");
+      }
+      nodes.push(this.mockDisplay(category, statValue1, statValue2))
+    }
+  };
+
+  componentDidMount() {
+    console.log("MOUNTED");
+  };
 
   render() {
     return (
@@ -201,43 +287,12 @@ class Compare extends Component {
               })}
           </TabList>
           {this.props.data[0].map(character => {
-            // this.sortData();
             console.log(character, "character");
             // let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
             var nodes = [];
-            var category;
-            var statValue1;
-            var statValue2;
             let compStats1 = this.props.data[1];
             let compStats2 = this.props.data[2];
-            if (compStats1.hasOwnProperty(character) && compStats2.hasOwnProperty(character)) {
-              for (var prop in compStats1[character]) {
-                let cs1 = compStats1[character][prop];
-                let cs2 = compStats2[character][prop];
-                category = prop.replace(/_/g, ' ');
-                if (prop.includes("time")) {
-                  if (cs1 === undefined ) statValue1 = "0:00"
-                  if (cs2 === undefined ) statValue2 = "0:00"
-                  const convertToHHMM = time => {
-                    var hrs = parseInt(Number(time));
-                    var min = Number.parseFloat((Number(time)-hrs) * 60).toFixed(0);
-                    if (hrs < 10) hrs = "0" + `${hrs}`;
-                    if (min < 10) min = "0" + `${min}`;
-                    return hrs+':'+min;
-                  }
-                  statValue1 = convertToHHMM(compStats1[character][prop])
-                  statValue2 = convertToHHMM(compStats2[character][prop])
-                  nodes.push(this.mockDisplay(category, statValue1, statValue2))
-
-                } else {
-                  if (cs1 === undefined ) statValue1 = "0"
-                  if (cs2 === undefined ) statValue2 = "0"
-                  statValue1 = compStats1[character][prop];
-                  statValue2 = compStats2[character][prop];
-                  nodes.push(this.mockDisplay(category, statValue1, statValue2));
-                }
-              }
-            }
+            this.categoryMatching(character, nodes);
             // Nishik-1477
             return (
               <TabPanel>

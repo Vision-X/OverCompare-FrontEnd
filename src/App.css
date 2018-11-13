@@ -292,14 +292,14 @@ div.react-tabs ul {
 }
 
 .react-tabs_tab-panel {
-  margin-top: 2rem !important;
+  margin: 2rem !important;
 }
 
 .react-tabs__tab-panel--selected {
   background-color: steelblue !important;
   border-radius: 4px;
-  margin: 2rem 10% !important;
-  width: 80% !important;
+  margin: 2rem 5% !important;
+  width: 90% !important;
   display: flex !important;
   justify-content: space-around;
   /* align-items: left; */
@@ -313,14 +313,24 @@ div.react-tabs ul {
 }
 
 .react-tabs__tab-panel--selected div {
-  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 0;
+  /* text-align: left; */
+  width: 40%;
+  margin: auto;
 }
 
 .react-tabs__tab-panel--selected p {
   font-size: 1rem;
   color: white;
-  margin: 4px 0;
+  margin-top: 4px;
+  margin-bottom: 4px;
   font-style: normal !important;
+  text-align: left;
+  /* width: 20%; */
 }
 
 Footer {
@@ -346,8 +356,13 @@ Footer {
     width:
   } */
 
+  #compare-section {
+    margin-bottom: 2rem !important;
+  }
+
   .react-tabs__tab-panel--selected div {
-    width: 100%;
+    /* width: 45%; */
+    width: 80%;
   }
 
   .react-tabs__tab {
