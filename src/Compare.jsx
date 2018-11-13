@@ -122,87 +122,56 @@ class Compare extends Component {
     let compStats1 = this.props.data[1];
     let compStats2 = this.props.data[2];
     console.log(compStats1, compStats2);
-    let objkeys = Object.keys(compStats1);
-    let objvals = Object.values(compStats1);
-    let objkeys2 = Object.keys(compStats2);
-    let objvals2 = Object.values(compStats2);
-    // let statsBundle = [];
     let statSpecific = {};
-    for (var prop in compStats1) {
-      if (compStats2.hasOwnProperty(prop)) {
-        // let keys1 = Object.keys(compStats1[prop]);
-        // let deeper1 = Object.values(keys1);
-        // let keys2 = Object.keys(compStats2[prop]);
-        // let deeper2 = Object.values(keys2);
-        // let stats1 = Object.keys(deeper1);
-        // deeper1.sort();
-        // deeper2.sort();
-        // console.log(deeper2);
-        // console.log(deeper1);
-        // console.log("__________________________")
-        console.log("char name__________________ ", prop);
-        // for (var i = 0; i < keys2.length; i++) {
-        //   if (keys1[i] === keys2[i]) {
-        //     console.log("HAYYYYYYYYYYYYYYYYYYYYYY");
-        //   } else {
-        //   console.log(prop, '[prop]');
-        //   console.log(keys2[i], "compStats2[prop][i]")
-        //   let charSpecific = [];
-        //   charSpecific.push(keys2[i]);
-        //   charSpecific.push(deeper2[i]);
-        //   statSpecific[prop] += charSpecific;
-        //   }
-        // }
-        // for (var key in compStats1[prop]) {
-        //   console.log("compStats1[prop]-----", compStats1[prop]);
-        //   if (compStats2[prop].hasOwnProperty(key)) {
-        //     // console.log("hiiiii")
-        //     let statsBundle = [];
-        //     console.log("char-:  ", prop);
-        //     console.log("key--:  ", key);
-        //     // console.log("value:  ", compStats2[prop][key])
-        //     // console.log("value2: ", compStats1[prop][key])
-        //     console.log(Object.keys(compStats1[prop])[key]);
-        //     console.log(Object.values(compStats2[prop]));
-        //     // console.log(compStats2[key])
-        //     statsBundle.push(prop);
-        //     statsBundle.push(key);
-        //     // statSpecific.push(compStats1[prop]);
-        //     statsBundle.push(compStats1[prop][key]);
-        //     statsBundle.push(compStats2[prop][key]);
-        //     statSpecific[prop] = statsBundle;
-        //     console.log(statSpecific);
-        //   } else if (!compStats1[prop].hasOwnProperty(key)) {
-        //     console.log("fucked for comp1");
-        //     console.log("NOPE nope nopeeee  ");
-        //   }
-        // }
-        // console.log(deeper1, "deeper1 ________________");
-        // console.log(deeper2, "deeper2 ________________");
-        // console.log(typeof deeper1)
+    for (var key in compStats1) {
+      if (compStats2.hasOwnProperty(key)) {
+        console.log("char name__________________ ", key);
+        for (var prop in compStats2[key]) {
+          if (compStats1[key][prop]) {
+            console.log("prop", prop);
+            console.log(compStats1[key][prop]);
+            console.log(compStats2[key][prop]);
+          }
+        }
       }
       // console.log("statSpecific arrays", statSpecific);
     }
-    // console.log(statSpecific);
-    // return statSpecific;
+  };
+
+  thoseStats(charname) {
+    let compStats1 = this.props.data[1];
+    let compStats2 = this.props.data[2];
+    if (compStats1.hasOwnProperty(charname) && compStats2.hasOwnProperty(charname)) {
+      for (var prop in compStats1[charname]) {
+        let category = prop;
+        let statValue1 = compStats1[charname][prop];
+        let statValue2 = compStats2[charname][prop];
+        this.mockDisplay(category, statValue1, statValue2);
+      }
+    }
   }
 
-  statsByCategory() {}
+  mockDisplay(category, statValue1, statValue2) {
+    // console.log("mockDisplay ........");
+    // console.log("cat : ", category);
+    // console.log("sv1 : ", statValue1);
+    // console.log("sv2 : ", statValue2);
+    let player1 = this.props.names[0];
+    let player2 = this.props.names[1];
+    return (
+      <div>
+        <h3>{category}</h3>
+        <p>{player1}: {statValue1}</p>
+        <p>{player2}: {statValue2}</p>
+      </div>
+    )
+  };
 
-  componentWillMount() {}
+  statsByCategory() {};
 
-  componentDidMount() {}
+  componentDidMount() {};
 
   render() {
-    {
-      console.log(this.props, "props");
-    }
-    {
-      console.log(this.props.data[1], "firstplayer");
-    }
-    {
-      console.log(this.props.data[2], "secondplayer");
-    }
     return (
       <section id="compare-section">
         <h3>MATCHED CHARACTERS</h3>
@@ -234,12 +203,47 @@ class Compare extends Component {
           {this.props.data[0].map(character => {
             // this.sortData();
             console.log(character, "character");
-            console.log(this.sortData());
-            let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
+            // let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
+            var nodes = [];
+            var category;
+            var statValue1;
+            var statValue2;
+            let compStats1 = this.props.data[1];
+            let compStats2 = this.props.data[2];
+            if (compStats1.hasOwnProperty(character) && compStats2.hasOwnProperty(character)) {
+              for (var prop in compStats1[character]) {
+                let cs1 = compStats1[character][prop];
+                let cs2 = compStats2[character][prop];
+                category = prop.replace(/_/g, ' ');
+                if (prop.includes("time")) {
+                  if (cs1 === undefined ) statValue1 = "0:00"
+                  if (cs2 === undefined ) statValue2 = "0:00"
+                  const convertToHHMM = time => {
+                    var hrs = parseInt(Number(time));
+                    var min = Number.parseFloat((Number(time)-hrs) * 60).toFixed(0);
+                    if (hrs < 10) hrs = "0" + `${hrs}`;
+                    if (min < 10) min = "0" + `${min}`;
+                    return hrs+':'+min;
+                  }
+                  statValue1 = convertToHHMM(compStats1[character][prop])
+                  statValue2 = convertToHHMM(compStats2[character][prop])
+                  nodes.push(this.mockDisplay(category, statValue1, statValue2))
+
+                } else {
+                  if (cs1 === undefined ) statValue1 = "0"
+                  if (cs2 === undefined ) statValue2 = "0"
+                  statValue1 = compStats1[character][prop];
+                  statValue2 = compStats2[character][prop];
+                  nodes.push(this.mockDisplay(category, statValue1, statValue2));
+                }
+              }
+            }
+            // Nishik-1477
             return (
               <TabPanel>
                 <h4>{character}</h4>
-                <BarChart data={this.props.data2} data1={this.props.data3} />
+                {nodes}
+                {/*<BarChart data={this.props.data2} data1={this.props.data3} />*/}
               </TabPanel>
             );
           })}

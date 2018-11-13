@@ -67,54 +67,8 @@ class App extends Component {
                     competitiveStats1: stats,
                     competitiveStats2: stats2
                   });
-    // this.setState({ competitiveStats1: stats });
-    // this.setState({ competitiveStats2: stats2 });
-    console.log("competitiveStats1...", this.state.competitiveStats1);
-    console.log("competitiveStats2...", this.state.competitiveStats2);
-    // for (let i = 0; i < Object.entries(stats).length; i++) {
-    //   let name = Object.entries(stats)[i][0];
-    //   let data = Object.entries(Object.entries(stats)[i][1]).sort();
-    //   let data2 = Object.entries(Object.entries(stats2)[i][1]).sort();
-    //   // console.log("data2............", data2);
-    //   console.log("character: ", name);
-    //   for (let j = 0; j < data.length && j < data2.length; j++) {
-    //     // console.log("stat name: ", data[j][0]);
-    //     // console.log("stat value: ", data[j][1]);
-    //     // console.log("stat name2: ", data2[j][0]);
-    //     if (data[j][0] === data2[j][0]) {
-    //       // console.log("statName: " + data[j][0]);
-    //       // console.log("statValues: ", "p1 :" + data[j][1], "p2: " + data2[j][1]);
-    //       let statValue = data[j][1];
-    //       let statValue2 = data2[j][1];
-    //       // this.setState({chartData[0].y = statValue});
-    //       // chartData[1].y = statValue2;
-    //       console.log("statName: " + data[j][0]);
-    //       // console.log("chartData...", chartData);
-    //
-    //       // return stuff;
-    //     }
-    //     let statValue = data[j][1];
-    //     let statValue2 = data2[j][1]
-    //     stuff[0].y = statValue;
-    //     stuff[1].y = statValue2;
-    //     console.log("STUFF", "for char: " + name, ", stat name: " + data[j][0] , stuff);
-    //   }
-    // }
-    // console.log("STUFF!", stuff);
-  };
 
-  // breakItDown = (stats) => {
-  // // console.log(Object.entries(stats)[0][0])
-  //     for (let i = 0; i < Object.entries(stats).length; i++) {
-  //       let name = Object.entries(stats)[i][0];
-  //       let data = Object.entries(Object.entries(stats)[i][1]).sort();
-  //       console.log("character: ", name);
-  //       for (let j=0; j < data.length; j++) {
-  //         console.log("stat name: ", data[j][0]);
-  //         console.log("stat value: ", data[j][1]);
-  //       }
-  //     }
-  // }
+  };
 
   fetchFirstPlayer() {
     let player1 = this.state.player1;
@@ -128,7 +82,7 @@ class App extends Component {
         .then(dataGrab1)
         .catch();
     }
-  }
+  };
 
   fetchSecondPlayer() {
     let player2 = this.state.player2;
@@ -142,7 +96,7 @@ class App extends Component {
         .then(dataGrab2)
         .catch();
     }
-  }
+  };
 
   handleChange(event) {
     let targetField = event.target.name;
@@ -163,7 +117,7 @@ class App extends Component {
         );
       }
     }
-  }
+  };
 
   handleSubmit = event => {
     event.preventDefault();
@@ -197,12 +151,21 @@ class App extends Component {
         clickCount++;
         document.querySelector(".input-form").classList.toggle("hidden");
       }
-  }
+  };
 
   renderCompare() {
     if (this.state.competitiveStats2) {
       return (
-        <Compare userAgent={window.navigator.userAgent} data={ [this.state.matchedData, this.state.competitiveStats1, this.state.competitiveStats2] } firstplayer={this.state.competitveStats1} secondplayer={this.state.competitveStats2} />
+        <Compare userAgent={window.navigator.userAgent}
+                 data={[
+                        this.state.matchedData,
+                        this.state.competitiveStats1,
+                        this.state.competitiveStats2
+                      ]}
+                 names={[this.state.player1, this.state.player2]}
+                 firstplayer={this.state.competitveStats1}
+                 secondplayer={this.state.competitveStats2}
+        />
       )
     } else if (!this.state.competitiveStats2) {
       return (
@@ -217,7 +180,7 @@ class App extends Component {
         <h2>Sorry, matches could not be found</h2>
       )
     }
-  }
+  };
 
   componentWillMount() {
     this.setState({ isMounted: "inline-block"})
@@ -245,6 +208,6 @@ class App extends Component {
       </div>
     );
   }
-}
+};
 
 export default App;
