@@ -14,7 +14,7 @@ class InputForm extends Component {
             <input id="submit" onClick={this.props.onClick} type="submit" name="submit" value="GO!" disabled={this.props.disabled} toggle={this.props.buttonEnableToggle} />
           </form>
           <div id="compare-mini" className="">
-            <input id="compare-btn" onClick={this.props.onClick} type="button" name="compare" value="HIDE" />
+            <input id="compare-btn" onClick={this.props.onClick} type="button" name="compare" value={this.props.showOrHide} />
           </div>
         </section>
     )

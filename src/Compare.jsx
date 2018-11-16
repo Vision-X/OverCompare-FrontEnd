@@ -119,10 +119,12 @@ class Compare extends Component {
     let player1 = this.props.names[0];
     let player2 = this.props.names[1];
     return (
-      <div>
-        <h3>{category}</h3>
-        <p>{player1}: {statValue1}</p>
-        <p>{player2}: {statValue2}</p>
+      <div class="square">
+        <h2>{category}</h2>
+        <div class="stats">
+          <p>{player1}: {statValue1}</p>
+          <p>{player2}: {statValue2}</p>
+        </div>
       </div>
     )
   };

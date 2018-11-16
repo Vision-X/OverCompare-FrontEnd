@@ -9,8 +9,6 @@ import { Compare } from "./Compare.jsx";
 import { Footer } from "./Footer.jsx";
 import MDSpinner from 'react-md-spinner';
 
-var clickCount = 0;
-
 class App extends Component {
   constructor() {
     super();
@@ -21,7 +19,8 @@ class App extends Component {
       player2: "",
       matchedData: [],
       chartData: [{x: 2, y: 0}, {x: 2, y: 0}],
-      isMounted: "none"
+      isMounted: "none",
+      showOrHide: "HIDE"
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -128,7 +127,6 @@ class App extends Component {
       document.querySelector(".input-form").classList.add("hidden");
       let compareBtn = document.getElementById("compare-btn");
       compareBtn.value = "SHOW";
-      clickCount++;
       event.target.reset();
       this.setState({ isMounted: "inline-block"});
       this.fetchFirstPlayer()
@@ -143,12 +141,10 @@ class App extends Component {
   handleClick(event) {
     console.log(event.target, "targetttt");
       if (event.target.value === "HIDE") {
-        event.target.value = (clickCount % 2 === 0) ? "SHOW" : "HIDE";
-        clickCount++;
+        this.setState({ showOrHide: "SHOW"})
         document.querySelector(".input-form").classList.toggle("hidden");
       } else {
-        event.target.value = (clickCount % 2 === 0) ? "SHOW" : "HIDE";
-        clickCount++;
+        this.setState({ showOrHide: "HIDE"})
         document.querySelector(".input-form").classList.toggle("hidden");
       }
   };
@@ -201,6 +197,7 @@ class App extends Component {
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
           onClick={this.handleClick}
+          showOrHide={this.state.showOrHide}
         />
         <AddPlayer />
         {this.renderCompare()}
