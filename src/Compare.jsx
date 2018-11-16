@@ -119,16 +119,39 @@ class Compare extends Component {
   mockDisplay = (category, statValue1, statValue2) => {
     let player1 = this.props.names[0];
     let player2 = this.props.names[1];
-    return (
-      <div className="square">
-        <div className="stats">
-          <p>{player1}: {statValue1}</p>
-          <p>{player2}: {statValue2}</p>
+
+    if (category.includes("most") || category.includes("best")) {
+      let cat = category.includes("most") ? category.replace(/most/g, '- most')
+                                          : category.replace(/best/g, '- best')
+      category = cat;
+    }
+
+    if (statValue1 > statValue2) {
+      return (
+        <div className="square">
+          <div className="stats">
+            <p>{this.rmDash(player1)}: <span class="green">{statValue1}</span></p>
+            <p>{this.rmDash(player2)}: <span class="red">{statValue2}</span></p>
+          </div>
+          <h2>{category}</h2>
         </div>
-        <h2>{category}</h2>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div className="square">
+          <div className="stats">
+            <p>{this.rmDash(player1)}: <span className="red">{statValue1}</span></p>
+            <p>{this.rmDash(player2)}: <span className="green">{statValue2}</span></p>
+          </div>
+          <h2>{category}</h2>
+        </div>
+      )
+    }
   };
+
+  rmDash = plyr => {
+    return plyr.split('-')[0]
+  }
 
   convertToHHMM = time => {
     var hrs = parseInt(Number(time));
@@ -192,9 +215,13 @@ class Compare extends Component {
           if (sortedKeys[i].includes("time")) {
             statValue1 = "0:00" ;
             statValue2 = this.convertToHHMM(cs2)
+          } else if (sortedKeys[i].includes("accuracy") || sortedKeys[i].includes("percentage")) {
+            statValue1 = `0%`;
+            statValue2 = `${parseInt(cs2 * 100)}%`;
           } else {
             statValue1 = "0";
             statValue2 = cs2;
+
           }
           // nodes.push(this.mockDisplay(category, statValue1, statValue2))
       } else if (cs2 === undefined && cs1 !== undefined) {
@@ -234,21 +261,27 @@ class Compare extends Component {
           if (sortedKeys[i].includes("time")) {
             statValue2 = "0:00"
             statValue1 = this.convertToHHMM(cs1);
+          } else if (sortedKeys[i].includes("accuracy") || sortedKeys[i].includes("percentage")) {
+            statValue2 = `0%`;
+            statValue1 = `${parseInt(cs1 * 100)}%`;
           } else {
             statValue2 = "0";
             statValue1 = cs1;
-          }
+        }
           // nodes.push(this.mockDisplay(category, statValue1, statValue2))
       } else if (cs1 !== undefined && cs2 !== undefined) {
           if (sortedKeys[i].includes("time")) {
               statValue1 = this.convertToHHMM(cs1)
               statValue2 = this.convertToHHMM(cs2)
             // nodes.push(this.mockDisplay(category, statValue1, statValue2))
+          } else if (sortedKeys[i].includes("accuracy") || sortedKeys[i].includes("percentage")) {
+            statValue2 = `${parseInt(cs2 * 100)}%`;
+            statValue1 = `${parseInt(cs1 * 100)}%`;
           } else {
-              statValue1 = cs1;
-              statValue2 = cs2;
+            statValue1 = cs1;
+            statValue2 = cs2;
             // nodes.push(this.mockDisplay(category, statValue1, statValue2));
-        }
+          }
       } else {
         console.log("WHAT IN THE FUCK");
       }
@@ -308,7 +341,11 @@ class Compare extends Component {
     } else {
       return (
         <div>
-          <p>Awaiting fetched data, please hold...</p>
+        <MDSpinner className="spinner-widget"
+                   style={{display: "inline-block"}}
+                   size={200}
+                   singleColor="#25BEFC"
+        />
         </div>
       )
     }

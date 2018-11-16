@@ -115,7 +115,6 @@ Header nav ul li:hover {
   transition: all .8s ease-out;
 }
 
-
 .input-section.ease-in {
   top: 0;
   position: relative;
@@ -134,19 +133,25 @@ Header nav ul li:hover {
 }
 
 input:-webkit-autofill {
-  -webkit-box-shadow:0 0 0 50px white inset !important;
+  /* -webkit-box-shadow:0 0 0 50px white inset !important; */
 }
 
 input:focus {
-  outline: 4px solid orange !important;
+  outline: 2px solid orange !important;
+  border-style: solid;
 }
 
 .input-section input[type="text"] {
+  /* background-color: #25BEFC; */
+  background-color: rgba(39, 191, 252, 0.8);
+  border-style: solid;
   border-radius: 4px;
-  color: black;
+  color: white;
+  /* caret-color: white; */
   font-size: 1.6rem;
   height: 3rem;
   margin: 1rem 0;
+  padding-left: 0.8rem;
 }
 
 input[type="submit"] {
@@ -220,7 +225,8 @@ svg {
   width: 100%;
 }
 
-#compare-section h3 {
+#compare-section h3,
+#compare-section h4 {
   background-color: #2F3542;
   border: 1px solid gray;
   color: white;
@@ -230,6 +236,11 @@ svg {
   margin-top: .5rem;
   padding: 0.8rem 1.2rem;
   width: 30%;
+}
+
+#compare-section h4 {
+  width: 100%;
+  margin: 20px 40%;
 }
 
 ul.react-tabs__tab-list {
@@ -260,7 +271,8 @@ div.react-tabs ul {
   padding: 0.6rem !important;
   text-shadow: 2px 2px 6px #333333;
   height: 3rem;
-  width: 30%;
+  width: 25%;
+  /* max-width: 30%; */
   /* max-width: 42%; */
 }
 
@@ -287,7 +299,7 @@ div.react-tabs ul {
   box-shadow: 1px 1px 24px #2F3542;
   height: 56px;
   width: 56px;
-  margin: 0 1.4rem 0 1rem;
+  margin: 0 1.4rem 0 1%;
 }
 
 .react-tabs_tab-panel {
@@ -314,9 +326,10 @@ div.react-tabs ul {
 .react-tabs__tab-panel--selected div {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  /* justify-content: center; */
   /* align-items: center; */
+  /* padding: 2% 5%; */
+  justify-content: center;
+  align-items: center;
   /* padding: 4px 0; */
   /* text-align: left; */
   /* width: 40%; */
@@ -327,7 +340,7 @@ div.react-tabs ul {
   font-size: 1rem;
   /* color: white; */
   /* color: #2F3542; */
-  margin-top: 4px;
+  margin-top: 3%;
   margin-bottom: 4px;
   font-style: normal !important;
   text-align: left;
@@ -348,7 +361,7 @@ div.react-tabs ul {
 }
 
 .square h2 {
-  /* color: #2F3542; */
+  color: #415273;
   display: flex;
   flex-wrap: wrap;
   text-overflow: inherit;
@@ -361,10 +374,33 @@ div.react-tabs ul {
   word-wrap: break-word;
 }
 
+
 .stats {
   display: flex;
   justify-content: center;
   margin: 1rem 0 0 0;
+  /* font-size: 2rem; */
+}
+
+.stats p {
+  font-size: 1rem;
+}
+
+.stats span {
+  font-size: 1.4rem;
+  color: #FDAF42;
+  text-shadow: 1px 1px 2px black;
+}
+
+.green {
+  /* text-shadow: 1px 1px 1px limegreen !important; */
+  font-size: 1.6rem !important;
+  font-style: oblique;
+}
+
+.red {
+  /* text-shadow: 1px 1px 1px firebrick !important; */
+  font-size: 1rem !important;
 }
 
 Footer {
@@ -392,11 +428,24 @@ Footer {
 
   #compare-section {
     margin-bottom: 2rem !important;
+    font-size: 2rem;
   }
 
   .react-tabs__tab-panel--selected div {
     /* width: 45%; */
-    width: 80%;
+    /* width: 80%; */
+  }
+
+  .square p {
+    font-size: 2rem;
+  }
+
+  .stats span {
+    font-size: 2.4rem;
+  }
+
+  .square h2 {
+    font-size: 1.3rem;
   }
 
   .react-tabs__tab {
