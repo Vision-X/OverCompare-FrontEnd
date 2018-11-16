@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import BarChart from "react-svg-bar-chart";
+// import BarChart from "react-svg-bar-chart";
+import MDSpinner from 'react-md-spinner';
 
 const charImages = [
   {
@@ -119,12 +120,12 @@ class Compare extends Component {
     let player1 = this.props.names[0];
     let player2 = this.props.names[1];
     return (
-      <div class="square">
-        <h2>{category}</h2>
-        <div class="stats">
+      <div className="square">
+        <div className="stats">
           <p>{player1}: {statValue1}</p>
           <p>{player2}: {statValue2}</p>
         </div>
+        <h2>{category}</h2>
       </div>
     )
   };
@@ -255,58 +256,121 @@ class Compare extends Component {
     }
   };
 
+  conditonallyRender() {
+    if (this.props.data[0] && this.props.data[1] && this.props.data[2]) {
+      return (
+        <section id="compare-section">
+          <h3>MATCHED CHARACTERS</h3>
+          <Tabs>
+            <TabList>
+              {this.props.data[0]
+                .sort(function(a, b) {
+                  if (a < b) return -1;
+                  if (a > b) return 1;
+                  return 0;
+                })
+                .map(name => {
+                  return (
+                    <Tab>
+                      <img
+                        className="character-image"
+                        src={charImages.reduce(function(acc, currVal, index) {
+                          if (Object.keys(currVal)[0] === name) {
+                            acc = Object.values(currVal)[0];
+                          }
+                          return acc;
+                        }, "")}
+                      />
+                      {name.toUpperCase()}
+                    </Tab>
+                  );
+                })}
+            </TabList>
+            {this.props.data[0].map(character => {
+              // console.log(character, "character");
+              // let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
+              var nodes = [];
+              let compStats1 = this.props.data[1];
+              let compStats2 = this.props.data[2];
+              this.categoryMatching(character, nodes);
+              // Nishik-1477
+              return (
+                <TabPanel>
+                  <h4>{character}</h4>
+                  {nodes}
+                  {/*<BarChart data={this.props.data2} data1={this.props.data3} />*/}
+                </TabPanel>
+              );
+            })}
+          </Tabs>
+        </section>
+      );
+    } else {
+      return (
+        <div>
+          <p>Awaiting fetched data, please hold...</p>
+        </div>
+      )
+    }
+  }
+
   componentDidMount() {
     console.log("MOUNTED");
   };
 
   render() {
+    // return (
+    //   <section id="compare-section">
+    //     <h3>MATCHED CHARACTERS</h3>
+    //     <Tabs>
+    //       <TabList>
+    //         {this.props.data[0]
+    //           .sort(function(a, b) {
+    //             if (a < b) return -1;
+    //             if (a > b) return 1;
+    //             return 0;
+    //           })
+    //           .map(name => {
+    //             return (
+    //               <Tab>
+    //                 <img
+    //                   className="character-image"
+    //                   src={charImages.reduce(function(acc, currVal, index) {
+    //                     if (Object.keys(currVal)[0] === name) {
+    //                       acc = Object.values(currVal)[0];
+    //                     }
+    //                     return acc;
+    //                   }, "")}
+    //                 />
+    //                 {name.toUpperCase()}
+    //               </Tab>
+    //             );
+    //           })}
+    //       </TabList>
+    //       {this.props.data[0].map(character => {
+    //         // console.log(character, "character");
+    //         // let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
+    //         var nodes = [];
+    //         let compStats1 = this.props.data[1];
+    //         let compStats2 = this.props.data[2];
+    //         this.categoryMatching(character, nodes);
+    //         // Nishik-1477
+    //         return (
+    //           <TabPanel>
+    //             <h4>{character}</h4>
+    //             {nodes}
+    //             {/*<BarChart data={this.props.data2} data1={this.props.data3} />*/}
+    //           </TabPanel>
+    //         );
+    //       })}
+    //     </Tabs>
+    //   </section>
+    // );
     return (
-      <section id="compare-section">
-        <h3>MATCHED CHARACTERS</h3>
-        <Tabs>
-          <TabList>
-            {this.props.data[0]
-              .sort(function(a, b) {
-                if (a < b) return -1;
-                if (a > b) return 1;
-                return 0;
-              })
-              .map(name => {
-                return (
-                  <Tab>
-                    <img
-                      className="character-image"
-                      src={charImages.reduce(function(acc, currVal, index) {
-                        if (Object.keys(currVal)[0] === name) {
-                          acc = Object.values(currVal)[0];
-                        }
-                        return acc;
-                      }, "")}
-                    />
-                    {name.toUpperCase()}
-                  </Tab>
-                );
-              })}
-          </TabList>
-          {this.props.data[0].map(character => {
-            console.log(character, "character");
-            // let barData = [{ x: 2, y: 3 }, { x: 2, y: 4 }];
-            var nodes = [];
-            let compStats1 = this.props.data[1];
-            let compStats2 = this.props.data[2];
-            this.categoryMatching(character, nodes);
-            // Nishik-1477
-            return (
-              <TabPanel>
-                <h4>{character}</h4>
-                {nodes}
-                {/*<BarChart data={this.props.data2} data1={this.props.data3} />*/}
-              </TabPanel>
-            );
-          })}
-        </Tabs>
-      </section>
-    );
+      <Fragment>
+        {this.conditonallyRender()}
+      </Fragment>
+    )
   }
 }
 

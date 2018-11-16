@@ -20,7 +20,8 @@ class App extends Component {
       matchedData: [],
       chartData: [{x: 2, y: 0}, {x: 2, y: 0}],
       isMounted: "none",
-      showOrHide: "HIDE"
+      showOrHide: "HIDE",
+      players: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,20 +30,20 @@ class App extends Component {
   }
 
   get buttonEnabled() {
-    return this.state.player1.length >= 5 && this.state.player2.length >= 5;
+    return this.state.players;
   }
 
   get buttonDisabled() {
     return "false";
   }
 
-  get dataIsThere() {
-    if (this.state.player1.length > 0 && this.state.player2.length > 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // get dataIsThere() {
+  //   if (this.state.player1.length > 0 && this.state.player2.length > 0) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   findMatches = () => {
     let stuff = [{ x: 2, y: 0 }, { x: 2, y: 0 }];
@@ -116,17 +117,21 @@ class App extends Component {
         );
       }
     }
+    if (this.state.player1.length && this.state.player2.length) {
+      this.setState({ players: true })
+    }
   };
 
   handleSubmit = event => {
     event.preventDefault();
+    this.setState({ players: false, competitveStats2: "", competitiveStats1: "" })
     if (this.state.player1.length > 5 && this.state.player2.length > 5) {
       console.log("submit occured");
       // document.getElementById("submit").setAttribute("disabled", "true");
       // document.querySelector(".input-section").classList.add("compare-shrink");
       document.querySelector(".input-form").classList.add("hidden");
       let compareBtn = document.getElementById("compare-btn");
-      compareBtn.value = "SHOW";
+      this.setState({ showOrHide: "SHOW"})
       event.target.reset();
       this.setState({ isMounted: "inline-block"});
       this.fetchFirstPlayer()
@@ -139,7 +144,7 @@ class App extends Component {
   };
 
   handleClick(event) {
-    console.log(event.target, "targetttt");
+    // console.log(event.target, "targetttt");
       if (event.target.value === "HIDE") {
         this.setState({ showOrHide: "SHOW"})
         document.querySelector(".input-form").classList.toggle("hidden");
