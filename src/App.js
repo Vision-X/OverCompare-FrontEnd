@@ -21,7 +21,8 @@ class App extends Component {
       chartData: [{x: 2, y: 0}, {x: 2, y: 0}],
       isMounted: "none",
       showOrHide: "HIDE",
-      players: false
+      players: false,
+      submit: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -100,32 +101,38 @@ class App extends Component {
 
   handleChange(event) {
     let targetField = event.target.name;
-    if (targetField === "player1") {
-      if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
-        this.setState({ player1: event.target.value });
-      } else {
-        console.log(
-          "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
-        );
-      }
-    } else if (targetField === "player2") {
-      if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
-        this.setState({ player2: event.target.value });
-      } else {
-        console.log(
-          "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
-        );
+    if (!this.state.submit) {
+      if (targetField === "player1") {
+        if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
+          this.setState({ player1: event.target.value });
+        } else {
+          console.log(
+            "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
+          );
+        }
+      } else if (targetField === "player2") {
+        if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
+          this.setState({ player2: event.target.value });
+          // this.setState({ players: true })
+        } else {
+          console.log(
+            "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
+          );
+        }
       }
     }
-    if (this.state.player1.length && this.state.player2.length) {
-      this.setState({ players: true })
+    if (this.state.player1.length && this.state.player2.length && !this.state.submit) {
+        this.setState({ players: true })
     }
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    this.setState({ players: false, competitveStats2: "", competitiveStats1: "" })
-    if (this.state.player1.length > 5 && this.state.player2.length > 5) {
+    // if (this.state.player1.length && this.state.player2.length) {
+      // this.setState({ players: true })
+    // }
+    this.setState({ submit: true, players: false, competitveStats2: "", competitiveStats1: "" })
+    if (this.state.players) {
       console.log("submit occured");
       // document.getElementById("submit").setAttribute("disabled", "true");
       // document.querySelector(".input-section").classList.add("compare-shrink");
@@ -140,8 +147,10 @@ class App extends Component {
             return this.fetchSecondPlayer().then(this.findMatches);
           }, 1001);
         })
+    // }
+    // this.setState({ submit: false });
     }
-  };
+  }
 
   handleClick(event) {
     // console.log(event.target, "targetttt");
