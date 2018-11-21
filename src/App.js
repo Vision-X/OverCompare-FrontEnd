@@ -22,7 +22,8 @@ class App extends Component {
       isMounted: "none",
       showOrHide: "HIDE",
       players: false,
-      submit: false
+      p1fetch: "",
+      p2fetch: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -55,8 +56,6 @@ class App extends Component {
     let stats2 = {};
     for (let character in comp1) {
       if (comp2.hasOwnProperty(character)) {
-        // console.log(comp1[character].general_stats);
-        // console.log(character, ".....", stats[character], "stats[character] line60");
         charArray.push(character);
         stats[character] = comp1[character].general_stats;
         stats2[character] = comp2[character].general_stats;
@@ -72,11 +71,15 @@ class App extends Component {
   };
 
   fetchFirstPlayer() {
-    let player1 = this.state.player1;
+    let player1 = this.state.p1fetch;
     if (player1.length > 1) {
       let apiURL1 = "https://owapi.net/api/v3/u/" + player1 + "/heroes";
       let dataGrab1 = response => {
-        this.setState({ compare1: [response.us.heroes] });
+        this.setState({
+                        compare1: [response.us.heroes],
+                        player1: this.state.p1fetch,
+                        p1fetch: ""
+                      })
       };
       return fetch(apiURL1)
         .then(response => response.json())
@@ -86,11 +89,15 @@ class App extends Component {
   };
 
   fetchSecondPlayer() {
-    let player2 = this.state.player2;
+    let player2 = this.state.p2fetch;
     if (player2.length > 1) {
       let apiURL2 = "https://owapi.net/api/v3/u/" + player2 + "/heroes";
       let dataGrab2 = response => {
-        this.setState({ compare2: [response.us.heroes] });
+        this.setState({
+                        compare2: [response.us.heroes],
+                        player2: this.state.p2fetch,
+                        p2fetch: ""
+                      })
       };
       return fetch(apiURL2)
         .then(response => response.json())
@@ -99,40 +106,39 @@ class App extends Component {
     }
   };
 
-  handleChange(event) {
+  handleChange = (event) => {
     let targetField = event.target.name;
-    if (!this.state.submit) {
       if (targetField === "player1") {
         if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
-          this.setState({ player1: event.target.value });
-        } else {
-          console.log(
-            "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
-          );
+          this.setState({ p1fetch: event.target.value });
         }
       } else if (targetField === "player2") {
         if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
-          this.setState({ player2: event.target.value });
+          this.setState({ p2fetch: event.target.value });
           // this.setState({ players: true })
-        } else {
-          console.log(
-            "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
-          );
         }
-      }
+      } else {
+      console.log(
+        "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
+      );
     }
-    if (this.state.player1.length && this.state.player2.length && !this.state.submit) {
-        this.setState({ players: true })
+  if (this.state.p1fetch.length && this.state.p2fetch.length) {
+      this.setState({ players: true })
     }
   };
 
   handleSubmit = event => {
     event.preventDefault();
+    // this.handleChange(event)
+    console.log(this.form);
+    console.log(this);
+    console.log(event.target.children);
+    // console.log((this.children);
     // if (this.state.player1.length && this.state.player2.length) {
       // this.setState({ players: true })
     // }
-    this.setState({ submit: true, players: false, competitveStats2: "", competitiveStats1: "" })
-    if (this.state.players) {
+    this.setState({ submit: true, competitveStats2: "", competitiveStats1: "" })
+    // if (this.state.players) {
       console.log("submit occured");
       // document.getElementById("submit").setAttribute("disabled", "true");
       // document.querySelector(".input-section").classList.add("compare-shrink");
@@ -149,7 +155,7 @@ class App extends Component {
         })
     // }
     // this.setState({ submit: false });
-    }
+    // }
   }
 
   handleClick(event) {
