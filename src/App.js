@@ -36,16 +36,17 @@ class App extends Component {
   }
 
   get buttonDisabled() {
-    return "false";
+    // return "false";
+    // this.datsIsThere()
   }
 
-  // get dataIsThere() {
-  //   if (this.state.player1.length > 0 && this.state.player2.length > 0) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  get dataIsThere() {
+    if (this.state.p1fetch.length > 5 && this.state.p2fetch.length > 5) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   findMatches = () => {
     let stuff = [{ x: 2, y: 0 }, { x: 2, y: 0 }];
@@ -111,19 +112,22 @@ class App extends Component {
       if (targetField === "player1") {
         if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
           this.setState({ p1fetch: event.target.value });
+        } else {
+          console.log(
+          "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
+          );
         }
       } else if (targetField === "player2") {
         if (/^[aA-zZ0-9-]+$/g.test(event.target.value)) {
           this.setState({ p2fetch: event.target.value });
-          // this.setState({ players: true })
+        } else {
+          console.log(
+          "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
+          );
         }
-      } else {
-      console.log(
-        "INVALID FORMAT: Only use letters, separated by -, followed by numbers"
-      );
-    }
-  if (this.state.p1fetch.length && this.state.p2fetch.length) {
-      this.setState({ players: true })
+      }
+      if (this.state.p1fetch.length && this.state.p2fetch.length) {
+          this.setState({ players: true })
     }
   };
 
@@ -137,7 +141,7 @@ class App extends Component {
     // if (this.state.player1.length && this.state.player2.length) {
       // this.setState({ players: true })
     // }
-    this.setState({ submit: true, competitveStats2: "", competitiveStats1: "" })
+    this.setState({ submit: true, players: false, competitveStats2: "", competitiveStats1: "" })
     // if (this.state.players) {
       console.log("submit occured");
       // document.getElementById("submit").setAttribute("disabled", "true");
